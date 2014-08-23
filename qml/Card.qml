@@ -14,9 +14,10 @@ Flipable {
         color: Theme.primaryColor
 
         Label {
-            text: "Player "+ind
+            text: card.player != undefined ? card.player.title : "Sokko"
             color: "black"
             rotation: -1*tRot.angle
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
@@ -25,7 +26,7 @@ Flipable {
         color: Theme.highlightColor
 
         Label {
-            text: "Role "+ind
+            text: card.player.role.name
             color: "red"
 
         }

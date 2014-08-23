@@ -7,4 +7,5 @@ Item {
     property bool classic
     property bool readyToStart
     property var players
+    property var middles
 }

@@ -22,7 +22,8 @@ function initGameState(st) {
     gameState.numberOfPlayers = 4;
     gameState.classic = false;
     gameState.readyToStart = false;
-    gameState.players = {}
+    gameState.players = []
+    gameState.middles = []
 }
 
 function Villager() {
@@ -46,7 +47,14 @@ function Minion() {
 
 function Player(id) {
     this.id = id;
-    this.title = "Player "+(id+1);
+    this.title = "P "+(id+1);
+    this.role = undefined;
+}
+
+function Middle(id) {
+    this.id = id;
+    this.title = "";
+    this.role = undefined;
 }
 
 function startGame() {
@@ -54,16 +62,30 @@ function startGame() {
     for (var p = 0; p < gameState.numberOfPlayers; p++)
     {
         var desiredIndex = Math.floor(Math.random() * selRols.length);
-        var roleInd = selRols.splice(desiredIndex, 1);
-        gameState.players[new Player(p)] = gameState.roles[roleInd];
+        var roleInd = selRols.splice(desiredIndex, 1)[0];
+        var pl = new Player(p)
+        pl.role = gameState.roles[roleInd];
+        gameState.players[p] = pl;
     }
+    for (var s = 0; s < 3; s++)
+    {
+        var desiredIndex = Math.floor(Math.random() * selRols.length);
+        var roleInd = selRols.splice(desiredIndex, 1)[0];
+        var pl = new Middle(s)
+        pl.role = gameState.roles[roleInd];
+        gameState.middles.push(pl);
+    }
+
     console.log(gameState.players)
+    console.log(gameState.middles)
 }
 
 function getPlayer(id) {
-    for (var p in gameState.players)
-        if (p.id === id)
-            return p
+    return gameState.players[id];
+}
+
+function getMiddle(id) {
+    return gameState.middles[id];
 }
 
 function readyToStart() {

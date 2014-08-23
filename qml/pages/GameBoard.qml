@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import ".."
+import "../js/Engine.js" as Engine
 
 Page {
     id: gameBoard
@@ -16,6 +17,7 @@ Page {
             id: rect
             ind: index
             property real ang
+            player: Engine.getPlayer(index)
 
             Component.onCompleted: {
                 var middleX = parent.width / 2
@@ -46,16 +48,19 @@ Page {
        ind: -1
        x: parent.width/2 - width/2
        y: parent.height/2 - (height/2) - (height + 10)
+       player: Engine.getMiddle(0)
     }
     Card {
        ind: -2
        x: parent.width/2 - width/2
        y: parent.height/2 - (height/2)
+       player: Engine.getMiddle(1)
     }
     Card {
        ind: -3
        x: parent.width/2 - width/2
        y: parent.height/2 - (height/2) + (height + 10)
+       player: Engine.getMiddle(2)
     }
 
     Label {
