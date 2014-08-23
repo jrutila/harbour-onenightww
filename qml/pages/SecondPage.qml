@@ -50,6 +50,11 @@ Page {
             MenuItem {
                 text: qsTr("Start")
                 enabled: gameCanvas.readyToStart
+                onClicked: {
+                    Engine.startGame();
+                    pageStack.clear();
+                    pageStack.push("GameBoard.qml", { gameCanvas: gameCanvas })
+                }
             }
         }
 
@@ -58,7 +63,7 @@ Page {
         cellHeight: parent.height / 6
 
         header: PageHeader {
-            title: qsTr("Choose " + (Engine.gameState.numberOfPlayers + 3) + " roles")
+            title: qsTr("Choose " + (gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length) + " roles")
         }
 
         delegate: Rectangle {

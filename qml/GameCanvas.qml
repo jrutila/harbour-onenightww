@@ -6,4 +6,5 @@ Item {
     property int numberOfPlayers
     property bool classic
     property bool readyToStart
+    property var players
 }
