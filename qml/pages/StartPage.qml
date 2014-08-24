@@ -35,65 +35,43 @@ import "../js/Engine.js" as Engine
 
 Page {
     id: page
-
     forwardNavigation: true
-    // To enable PullDownMenu, place our content in a SilicaFlickable
-    /*
-    SilicaFlickable {
-        anchors.fill: parent
+    property GameCanvas gameState//: Engine.getGame()
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-            }
+    Column {
+        id: column
+
+        width: page.width
+        spacing: Theme.paddingLarge
+        PageHeader {
+            title: qsTr("Start new game")
+        }
+        Label {
+            x: Theme.paddingLarge
+            text: qsTr("Number of players " + gameState.numberOfPlayers)
+            color: Theme.secondaryHighlightColor
+            font.pixelSize: Theme.fontSizeExtraLarge
+        }
+        Slider {
+            id: nbrSlider
+            minimumValue: 3
+            maximumValue: 10
+            value: gameState.numberOfPlayers
+            stepSize: 1.0
+            width: parent.width
+            onValueChanged: gameState.numberOfPlayers = value
         }
 
-        // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
-*/
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
-        Column {
-            id: column
-
-            width: page.width
-            spacing: Theme.paddingLarge
-            PageHeader {
-                title: qsTr("Start new game")
-            }
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Number of players " + gameState.numberOfPlayers)
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }
-            Slider {
-                id: nbrSlider
-                minimumValue: 3
-                maximumValue: 10
-                value: gameState.numberOfPlayers
-                stepSize: 1.0
-                width: parent.width
-                onValueChanged: gameState.numberOfPlayers = value
-            }
-
-            Button {
-                text: qsTr("Next")
-                onClicked: pageStack.push("./SecondPage.qml", {gameCanvas: gameState})
+        Button {
+            text: qsTr("Next")
+            id: btn
+            //anchors.bottom: parent.bottom;
+            //anchors.left: parent.left
+            onClicked: {
+                onClicked: pageStack.push("./SecondPage.qml")
             }
         }
-
-    Component.onCompleted: {
-        Engine.initGameState(gameState)
     }
-
-    GameCanvas {
-        id: gameState
-    }
-
-    ////}
 }
 
 

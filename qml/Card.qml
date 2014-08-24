@@ -9,6 +9,8 @@ Flipable {
     property int ind
     property var player
 
+    signal cardSelected
+
     front: Rectangle {
         anchors.fill: parent
         color: Theme.primaryColor

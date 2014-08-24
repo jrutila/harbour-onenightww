@@ -35,7 +35,7 @@ import "../js/Engine.js" as Engine
 
 Page {
     id: page
-    property GameCanvas gameCanvas
+    property GameCanvas gameCanvas: Engine.getGame()
 
     SilicaGridView {
         id: listView
@@ -54,6 +54,7 @@ Page {
                     Engine.startGame();
                     pageStack.clear();
                     pageStack.push("GameBoard.qml", { gameCanvas: gameCanvas })
+                    pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(0) });
                 }
             }
         }
@@ -73,7 +74,7 @@ Page {
             height: listView.cellHeight
             color: "red"
             border.color: selected ? Theme.highlightColor : Theme.primaryColor
-             border.width: 5
+            border.width: 5
 
             Label {
                 x: Theme.paddingLarge
@@ -90,8 +91,3 @@ Page {
         }
     }
 }
-
-
-
-
-

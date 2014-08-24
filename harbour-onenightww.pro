@@ -29,7 +29,8 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     qml/js/Engine.js \
     qml/GameCanvas.qml \
     qml/pages/GameBoard.qml \
-    qml/Card.qml
+    qml/Card.qml \
+    qml/PlayerDialog.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

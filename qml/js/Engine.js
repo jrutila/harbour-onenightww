@@ -1,6 +1,8 @@
 .pragma library
 var gameState
-function getGame() { return gameState; }
+function getGame() {
+    return gameState;
+}
 
 function initGameState(st) {
     console.log("initing gamestate")
@@ -75,12 +77,10 @@ function startGame() {
         pl.role = gameState.roles[roleInd];
         gameState.middles.push(pl);
     }
-
-    console.log(gameState.players)
-    console.log(gameState.middles)
 }
 
 function getPlayer(id) {
+    console.log("get player "+id)
     return gameState.players[id];
 }
 

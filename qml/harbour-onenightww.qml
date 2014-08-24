@@ -31,11 +31,24 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import "js/Engine.js" as Engine
 
 ApplicationWindow
 {
-    initialPage: Component { StartPage { } }
+    GameCanvas {
+        id: gameSt
+    }
+
+    initialPage: Component {
+        StartPage { gameState: gameSt }
+    }
+
+    Component.onCompleted: {
+        Engine.initGameState(gameSt)
+    }
+
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
 }
 
 
