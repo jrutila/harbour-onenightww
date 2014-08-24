@@ -25,12 +25,14 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     translations/*.ts \
     harbour-onenightww.desktop \
     qml/pages/StartPage.qml \
-    qml/roles/Roles.qml \
     qml/js/Engine.js \
     qml/GameCanvas.qml \
     qml/pages/GameBoard.qml \
     qml/Card.qml \
-    qml/PlayerDialog.qml
+    qml/PlayerDialog.qml \
+    qml/roles/Villager.qml \
+    qml/roles/Werewolf.qml \
+    qml/roles/Seer.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

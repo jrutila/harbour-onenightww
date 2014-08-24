@@ -9,7 +9,7 @@ Flipable {
     property int ind
     property var player
 
-    signal cardSelected
+    signal cardSelected(var selected)
 
     front: Rectangle {
         anchors.fill: parent
@@ -72,6 +72,6 @@ Flipable {
     MouseArea {
         id: clickArea
         anchors.fill: parent
-        onClicked: card.flipped = !card.flipped
+        onClicked: cardSelected(card)
     }
 }

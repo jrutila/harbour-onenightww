@@ -29,22 +29,22 @@ function initGameState(st) {
 }
 
 function Villager() {
-    this.name = "villager"
+    this.name = "Villager"
 }
 function Werewolf() {
-    this.name = "werewolf"
+    this.name = "Werewolf"
 }
 function Seer() {
-    this.name = "seer"
+    this.name = "Seer"
 }
 function Robber() {
-    this.name = "robber"
+    this.name = "Robber"
 }
 function Mason() {
-    this.name = "mason"
+    this.name = "Mason"
 }
 function Minion() {
-    this.name = "minion"
+    this.name = "Minion"
 }
 
 function Player(id) {
@@ -61,7 +61,11 @@ function Middle(id) {
 
 function startGame() {
     var selRols = gameState.selectedRoles.slice();
-    for (var p = 0; p < gameState.numberOfPlayers; p++)
+    /** FOR TESTING **/
+    gameState.players[0] = new Player(0)
+    gameState.players[0].role = gameState.roles[selRols.splice(0, 1)[0]]
+    /** END **/
+    for (var p = 1; p < gameState.numberOfPlayers; p++)
     {
         var desiredIndex = Math.floor(Math.random() * selRols.length);
         var roleInd = selRols.splice(desiredIndex, 1)[0];
@@ -82,6 +86,20 @@ function startGame() {
 function getPlayer(id) {
     console.log("get player "+id)
     return gameState.players[id];
+}
+
+function getPlayers(roleType)
+{
+    var ret = []
+    for (var p in gameState.players)
+    {
+        if (gameState.players[p].role instanceof roleType)
+            ret.push(gameState.players[p])
+    }
+    for (var m in gameState.middles)
+        if (gameState.middles[m].role instanceof roleType)
+            ret.push(gameState.middles[m])
+    return ret;
 }
 
 function getMiddle(id) {
