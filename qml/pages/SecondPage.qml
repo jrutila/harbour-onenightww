@@ -64,6 +64,7 @@ Page {
         cellHeight: parent.height / 6
 
         header: PageHeader {
+            id: hdr
             title: qsTr("Choose " + (gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length) + " roles")
         }
 
@@ -86,6 +87,7 @@ Page {
                 onClicked: {
                     Engine.toggleRole(index);
                     delegate.selected = Engine.isSelected(index)
+                    hdr.title = qsTr("Choose " + (gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length) + " roles")
                 }
             }
         }

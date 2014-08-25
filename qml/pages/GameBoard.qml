@@ -86,7 +86,21 @@ Page {
     Label {
         text: "INFO"
         id: infoText
+        anchors.top: parent.top
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+        z: 3
+    }
+
+    Label {
+        text: ""
+        id: helpText
         anchors.bottom: parent.bottom
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+        z: 3
     }
 
     property var lComp
@@ -98,7 +112,11 @@ Page {
         if (clicks == 0)
             logic.first(cc)
         else if (clicks == 1)
+        {
+            var pl = Engine.getPlayer(currentPlayer)
             logic.second(cc)
+            helpText.text = pl.role.info
+        }
         else if (clicks == 2)
         {
             logic.third(cc)
@@ -114,13 +132,20 @@ Page {
     }
 
     function nextPlayer() {
+
         for (var c = 0; c < rep.count; c++)
         {
             rep.itemAt(c).flipped = false
-            middle1.flipped = false
-            middle2.flipped = false
-            middle3.flipped = false
         }
+        middle1.flipped = false
+        middle2.flipped = false
+        middle3.flipped = false
+        helpText.text = ""
+        if (currentPlayer == gameCanvas.numberOfPlayers - 1)
+        {
+            return
+        }
+
         var dialog = pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(currentPlayer+1) });
         dialog.accepted.connect(function() {
             currentPlayer++
@@ -140,10 +165,17 @@ Page {
 
     function createLogic() {
         var pl = Engine.getPlayer(currentPlayer)
-        lComp = Qt.createComponent("../roles/"+pl.role.name+".qml")
+        lComp = Qt.createComponent("../roles/"+(pl.role.logic || pl.role.name)+".qml")
         if (lComp.status == Component.Error)
             console.log("ERR: "+lComp.errorString())
         if (lComp.status == Component.Ready)
             logic = lComp.createObject(gameBoard)
+    }
+
+    Button {
+        text: Restart
+        onClicked: {
+            pageStack.replace("StartPage.qml", { gameState: gameCanvas })
+        }
     }
 }

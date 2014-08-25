@@ -72,6 +72,10 @@ Page {
             }
         }
     }
+
+    Component.onCompleted: {
+        Engine.initGameState(gameState)
+    }
 }
 
 

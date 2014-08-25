@@ -8,6 +8,10 @@ Flipable {
     property bool flipped: false
     property int ind
     property var player
+    property int newX
+    property int newY
+    property int backX
+    property int backY
 
     signal cardSelected(var selected)
 
@@ -29,7 +33,7 @@ Flipable {
 
         Label {
             text: card.player.role.name
-            color: "red"
+            color: Theme.primaryColor
 
         }
     }
@@ -59,6 +63,40 @@ Flipable {
          PropertyChanges { target: tRot; angle: 0 }
          PropertyChanges { target: card; z: 1 }
          when: card.flipped
+     }
+
+     SequentialAnimation {
+         id: move
+
+     PropertyAnimation {
+         target: card
+         properties: "y"
+         duration: 800
+         to: newY
+         easing.type: Easing.InOutQuad
+     }
+     PropertyAnimation {
+         target: card
+         properties: "x"
+         duration: 800
+         to: newX
+         easing.type: Easing.InOutQuad
+     }
+     }
+
+     function moveTo(xx, yy)
+     {
+         backX = x
+         backY = y
+         newX = xx
+         newY = yy
+         console.log("Moving from "+y+" to "+newY)
+         move.start()
+     }
+
+     function moveBack() {
+         x = backX
+         y = backY
      }
 
      transitions: Transition {
