@@ -18,6 +18,4 @@ Dialog {
 
         text: "If you are "+ playerDialog.player.title + " flick left"
     }
-
-
 }

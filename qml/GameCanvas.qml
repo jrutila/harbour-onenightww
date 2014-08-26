@@ -9,4 +9,5 @@ QtObject {
     property var players
     property var middles
     property var switches
+    property var votes
 }

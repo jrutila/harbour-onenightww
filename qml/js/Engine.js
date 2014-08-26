@@ -8,15 +8,15 @@ function initGameState(st) {
     console.log("initing gamestate")
     gameState = st;
     gameState.roles =[
-    new Villager(),
-    new Villager(),
+    new Werewolf(),
+    new Werewolf(),
     new Seer(),
-    new Werewolf(),
-    new Werewolf(),
-    new Werewolf(),
-    new Drunk(),
-    new Villager(),
     new Robber(),
+    new Troublemaker(),
+    new Villager(),
+    new Villager(),
+    new Villager(),
+    new Drunk(),
     new Minion(),
     new Mason(),
     new Mason(),
@@ -26,6 +26,7 @@ function initGameState(st) {
     gameState.readyToStart = false;
     gameState.players = []
     gameState.middles = []
+    gameState.votes = {}
 }
 var villageTeam = "You are on <i>village team</i>. Kill at least one werewolf."
 
@@ -52,6 +53,11 @@ function Robber() {
     this.switched = null
     this.info = "You are..."
 }
+function Troublemaker() {
+    this.name = "Troublemaker"
+    this.switched = []
+    this.info = villageTeam
+}
 function Mason() {
     this.name = "Mason"
     this.info = villageTeam
@@ -68,7 +74,7 @@ function Tanner() {
 function Hunter() {
     this.name = "Hunter"
     this.logic = "Villager"
-    this.info = "The player you point at will die"
+    this.info = "The player you point at will die. You are on <i>village team</i>"
 }
 
 function Player(id) {
@@ -131,6 +137,16 @@ function readyToStart() {
     console.log("roles "+roles)
     gameState.readyToStart = gameState.numberOfPlayers + 3 == roles;
     return gameState.readyToStart;
+}
+
+function calcResults()
+{
+
+}
+
+function vote(voter, voted)
+{
+    gameState.votes[voter] = voted
 }
 
 function addRoles(list) {

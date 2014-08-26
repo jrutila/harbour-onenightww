@@ -20,8 +20,10 @@ Item {
 
     function second(card) {
         console.log("DRUNK")
-        card.flipped = true
         var curPlayer = Engine.getPlayer(currentPlayer)
+        if (card.player == curPlayer)
+            throw "Not yourself!"
+        card.flipped = true
         var curCard = curPlayer.card
         var mx = card.x
         var my = card.y

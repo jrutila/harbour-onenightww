@@ -42,6 +42,7 @@ Item {
         running: false
         repeat: false
         onTriggered: {
+            console.log("Move back")
             var curPlayer = Engine.getPlayer(currentPlayer)
             var curCard = curPlayer.card
             curCard.moveBack()

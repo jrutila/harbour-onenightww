@@ -8,6 +8,7 @@ Page {
     property GameCanvas gameCanvas: Engine.getGame()
     property int currentPlayer: 0
     property var curLogic
+    property int state: 0
 
     Repeater {
         id: rep
@@ -108,21 +109,35 @@ Page {
     property int clicks: 0
 
     function selectCard(cc) {
-        console.log("Card "+cc.player.id+" selected")
-        if (clicks == 0)
-            logic.first(cc)
-        else if (clicks == 1)
+
+        switch(state)
         {
-            var pl = Engine.getPlayer(currentPlayer)
-            logic.second(cc)
-            helpText.text = pl.role.info
+        case 0:
+            console.log("Card "+cc.player.id+" selected")
+            if (clicks == 0)
+                logic.first(cc)
+            else if (clicks == 1)
+            {
+                var pl = Engine.getPlayer(currentPlayer)
+                logic.second(cc)
+                helpText.text = pl.role.info
+            }
+            else if (clicks == 2)
+            {
+                logic.third(cc)
+                nextPlayer()
+            }
+            clicks++
+            break;
+        case 1:
+            console.log("Voting "+cc.player.id)
+            var curPlayer = Engine.getPlayer(currentPlayer)
+            if (cc.player instanceof Engine.Player && cc.player != curPlayer)
+            {
+                Engine.vote(curPlayer, cc.player)
+                nextPlayer()
+            }
         }
-        else if (clicks == 2)
-        {
-            logic.third(cc)
-            nextPlayer()
-        }
-        clicks++
     }
 
     Component.onCompleted:
@@ -143,24 +158,55 @@ Page {
         helpText.text = ""
         if (currentPlayer == gameCanvas.numberOfPlayers - 1)
         {
+            stateChange()
             return
         }
 
         var dialog = pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(currentPlayer+1) });
         dialog.accepted.connect(function() {
             currentPlayer++
-            for (var c = 0; c < rep.count; c++)
-            {
-                var card = rep.itemAt(c)
-                var player = Engine.getPlayer((c+currentPlayer) % gameCanvas.numberOfPlayers)
-                card.player = player
-                player.card = card
-            }
-
+            recalcCards()
             createLogic()
             clicks = 0
             logic.zero()
         })
+    }
+
+    function recalcCards() {
+        for (var c = 0; c < rep.count; c++)
+        {
+            var card = rep.itemAt(c)
+            var player = Engine.getPlayer((c+currentPlayer) % gameCanvas.numberOfPlayers)
+            card.player = player
+            player.card = card
+        }
+    }
+
+    function stateChange() {
+        console.log("State change!")
+        if (state == 0)
+        {
+            state = 1
+            var dialog = pageStack.push("DayDialog.qml");
+            dialog.accepted.connect(function() {
+                currentPlayer = 0
+                middle1.visible = false
+                middle2.visible = false
+                middle3.visible = false
+                recalcCards();
+                infoText.text = "Click the player to kill"
+            })
+        } else if (state == 1)
+        {
+            state = 2
+            infoText.text = "Here are the votes"
+            for (var i = 0; i < gameCanvas.numberOfPlayers; i++)
+            {
+                var cPlayer = Engine.getPlayer(i)
+                cPlayer.card.flipped = true
+                var voted = gameCanvas.votes[cPlayer]
+            }
+        }
     }
 
     function createLogic() {
@@ -173,9 +219,16 @@ Page {
     }
 
     Button {
-        text: Restart
+        text: "Restart"
         onClicked: {
             pageStack.replace("StartPage.qml", { gameState: gameCanvas })
         }
+    }
+    Button {
+        text: "Day"
+        onClicked: {
+            stateChange()
+        }
+        anchors.right: parent.right
     }
 }
