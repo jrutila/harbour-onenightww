@@ -37,6 +37,11 @@ Rectangle {
         moveAnim.start()
     }
 
+    function bringFront() {
+        moveAnim.toY.to = -40
+        moveAnim.start()
+    }
+
     function move(x, y)
     {
         moveAnim.toX.to = x
@@ -47,6 +52,17 @@ Rectangle {
     function moveBack() {
         cardMove.x = 0
         cardMove.y = 0
+    }
+
+    function zoom(en) {
+        if (en)
+        {
+            flipScale.xScale = 1.5
+            flipScale.yScale = 1.5
+        } else {
+            flipScale.xScale = 1.0
+            flipScale.yScale = 1.0
+        }
     }
 
     function setPlayer(pl) {
@@ -80,6 +96,7 @@ Rectangle {
             Label {
                 text: player.role.name
                 color: Theme.primaryColor
+                font.pixelSize: 18
             }
         }
 
@@ -89,7 +106,7 @@ Rectangle {
                 origin.x: flCard.width/2
                 origin.y: flCard.height/2
                 axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-                angle: 150    // the default angle
+                angle: 0    // the default angle
             },
             Rotation {
                 id: normRot

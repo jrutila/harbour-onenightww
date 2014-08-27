@@ -9,6 +9,7 @@ Page {
     property int currentPlayer: 0
     property var curLogic
     property int state: 0
+    property bool inited: false
 
     Repeater {
         id: rep
@@ -41,7 +42,7 @@ Page {
         id: middle1
         ind: -1
         x: parent.width/2 - width/2
-        y: parent.height/2 - (height/2) - (height + 10)
+        y: parent.height/2 - (card.height/2) - (card.height + 10)
         player: Engine.getMiddle(0)
         onCardSelected: selectCard(selected)
     }
@@ -49,7 +50,7 @@ Page {
         id: middle2
         ind: -2
         x: parent.width/2 - width/2
-        y: parent.height/2 - (height/2)
+        y: parent.height/2 - (card.height/2)
         player: Engine.getMiddle(1)
         onCardSelected: selectCard(selected)
     }
@@ -57,7 +58,7 @@ Page {
         id: middle3
         ind: -3
         x: parent.width/2 - width/2
-        y: parent.height/2 - (height/2) + (height + 10)
+        y: parent.height/2 - (card.height/2) + (card.height + 10)
         player: Engine.getMiddle(2)
         onCardSelected: selectCard(selected)
     }
@@ -120,11 +121,23 @@ Page {
         }
     }
 
-    Component.onCompleted:
-    {
+    onStatusChanged: {
+        if (!inited && status === PageStatus.Active && pageStack.depth === 1) {
+            console.log("Show first player dialog")
+            inited = true
+            pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(0) })
+               .accepted.connect(function() {
+                   doPlayerStuff()
+                })
+        }
+    }
+
+    function doPlayerStuff() {
         recalcCards()
         createLogic()
+        clicks = 0
         logic.zero()
+
     }
 
     function nextPlayer() {
@@ -146,10 +159,7 @@ Page {
         var dialog = pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(currentPlayer+1) });
         dialog.accepted.connect(function() {
             currentPlayer++
-            recalcCards()
-            createLogic()
-            clicks = 0
-            logic.zero()
+            doPlayerStuff()
         })
     }
 

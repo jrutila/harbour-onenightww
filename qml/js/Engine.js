@@ -92,11 +92,11 @@ function Middle(id) {
 function startGame() {
     var selRols = gameState.selectedRoles.slice();
     /** TESTING **/
-    var pl = new Player(0)
-    pl.role = gameState.roles[selRols.splice(3,1)[0]]
-    gameState.players[0] = pl
+    //var pl = new Player(0)
+    //pl.role = gameState.roles[selRols.splice(4,1)[0]]
+    //gameState.players[0] = pl
     /** END **/
-    for (var p = 1; p < gameState.numberOfPlayers; p++)
+    for (var p = 0; p < gameState.numberOfPlayers; p++)
     {
         var desiredIndex = Math.floor(Math.random() * selRols.length);
         var roleInd = selRols.splice(desiredIndex, 1)[0];

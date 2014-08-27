@@ -10,7 +10,7 @@ QtObject {
     function first(card) {
         var curPlayer = Engine.getPlayer(currentPlayer)
         console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
-        curPlayer.card.move(0, -20)
+        curPlayer.card.bringFront()
         infoText.text = "You are on village team.\
          Click another card to reveal your card"
     }

@@ -54,7 +54,6 @@ Page {
                     Engine.startGame();
                     pageStack.clear();
                     pageStack.push("GameBoard.qml", { gameCanvas: gameCanvas })
-                    pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(0) });
                 }
             }
         }
@@ -75,7 +74,7 @@ Page {
             height: listView.cellHeight
             color: "red"
             border.color: selected ? Theme.highlightColor : Theme.primaryColor
-            border.width: 5
+            border.width: 8
 
             Label {
                 x: Theme.paddingLarge

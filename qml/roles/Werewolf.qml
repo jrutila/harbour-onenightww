@@ -5,6 +5,7 @@ QtObject {
     function zero() {
         var curPlayer = Engine.getPlayer(currentPlayer)
         infoText.text = "Click a card to start"
+        curPlayer.card.bringFront()
     }
 
     function first(card) {

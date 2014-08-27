@@ -5,13 +5,14 @@ import "../js/Engine.js" as Engine
 Item {
     function zero() {
         var curPlayer = Engine.getPlayer(currentPlayer)
+        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
         infoText.text = "Click a card to start"
+        curPlayer.bringFront()
     }
 
     function first(card) {
         var curPlayer = Engine.getPlayer(currentPlayer)
-        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
-        curPlayer.card.flip(true)
+        curPlayer.card.flipped = true
         infoText.text = "You are the drunk. Click any card to switch one random middle card"
     }
 

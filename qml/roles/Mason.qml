@@ -4,12 +4,13 @@ import "../js/Engine.js" as Engine
 QtObject {
     function zero() {
         var curPlayer = Engine.getPlayer(currentPlayer)
+        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
         infoText.text = "Click a card to start"
+        curPlayer.card.bringFront()
     }
 
     function first(card) {
         var curPlayer = Engine.getPlayer(currentPlayer)
-        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
         curPlayer.card.flipped = true
         infoText.text = "You are a mason. Click any card to see others"
     }

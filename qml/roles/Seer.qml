@@ -5,17 +5,20 @@ QtObject {
     function zero() {
         var curPlayer = Engine.getPlayer(currentPlayer)
         infoText.text = "Click a card to start"
+        curPlayer.card.bringFront()
+        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
     }
 
     function first(card) {
         var curPlayer = Engine.getPlayer(currentPlayer)
-        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
         curPlayer.card.flipped = true
-        infoText.text = "You are the seer. Click any player or middle card to see it"
+        infoText.text = "You are the seer. \
+        Click any player or middle card to see it. \
+        Click yourself to skip."
     }
 
     function second(card) {
-        console.log("SEER")
+        var curPlayer = Engine.getPlayer(currentPlayer)
         if (card.player instanceof Engine.Middle)
         {
             var sk = Math.floor(Math.random() * 3)
@@ -35,7 +38,10 @@ QtObject {
                     m.card = card
                 }
             }
-        } else {
+        }
+        else if (curPlayer.card == card) {
+            helpText.text = "Skipped."
+        }  else {
             card.flipped = true
         }
 

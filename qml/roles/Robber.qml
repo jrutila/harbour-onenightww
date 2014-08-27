@@ -4,9 +4,12 @@ import "../js/Engine.js" as Engine
 
 Item {
     property var switched
+    property bool skipped: false
+
     function zero() {
         var curPlayer = Engine.getPlayer(currentPlayer)
         infoText.text = "Click a card to start"
+        curPlayer.card.bringFront()
     }
 
     function first(card) {
@@ -14,7 +17,7 @@ Item {
         console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
         curPlayer.card.flipped = true
         infoText.text = "You are the robber. \
-         Click the player you want to choose with.\
+         Click the player you want to switch roles with.\
          Click in the middle if you want to skip."
     }
 
@@ -23,6 +26,11 @@ Item {
         var curPlayer = Engine.getPlayer(currentPlayer)
         if (card.player == curPlayer)
             throw "Not yourself!"
+        if (card.player instanceof Engine.Middle)
+        {
+            skipped = true
+            return
+        }
         card.flipped = true
         var curCard = curPlayer.card
         curCard.moveTo(card)
@@ -35,6 +43,7 @@ Item {
     }
 
     function third(card) {
+        if (skipped) return
         var curPlayer = Engine.getPlayer(currentPlayer)
         var curCard = curPlayer.card
         curCard.flipped = false
