@@ -11,7 +11,7 @@ Item {
     function first(card) {
         var curPlayer = Engine.getPlayer(currentPlayer)
         console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
-        curPlayer.card.flipped = true
+        curPlayer.card.flip(true)
         infoText.text = "You are the drunk. Click any card to switch one random middle card"
     }
 
@@ -19,12 +19,8 @@ Item {
         console.log("DRUNK")
         var curPlayer = Engine.getPlayer(currentPlayer)
         var curCard = curPlayer.card
-        var mx = middle2.x
-        var my = middle2.y
-        var cx = curCard.x
-        var cy = curCard.y
-        curCard.moveTo(mx, my)
-        middle2.moveTo(cx, cy)
+        curCard.moveTo(middle2)
+        middle2.moveTo(curCard)
 
         infoText.text = "Click any card once more to close the cards"
     }
@@ -32,7 +28,7 @@ Item {
     function third(card) {
         var curPlayer = Engine.getPlayer(currentPlayer)
         var curCard = curPlayer.card
-        curCard.flipped = false
+        curPlayer.card.flip(false)
         switchBack.start()
     }
 

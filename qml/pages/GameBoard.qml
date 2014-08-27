@@ -17,14 +17,11 @@ Page {
         model: gameCanvas.numberOfPlayers
 
         Card {
-            id: rect
-            ind: index
-            property real ang
+            id: card
+            property int ind: index
             player: Engine.getPlayer((index+currentPlayer) % gameCanvas.numberOfPlayers)
 
             Component.onCompleted: {
-                player.card = rect
-
                 var middleX = parent.width / 2
                 var middleY = parent.height / 2
 
@@ -35,17 +32,7 @@ Page {
                 var my = middleY + (rep.circleHeight/2)*Math.cos(ang)
                 y = my - height/2
                 x = mx - width/2
-                console.log(gameCanvas)
             }
-            transform:
-                Rotation {
-                id: tRot
-                origin.x: width/2
-                origin.y: width/2
-                axis.x: 0; axis.y: 0; axis.z: 1     // set axis.y to 1 to rotate around y-axis
-                angle: rect.ang * (180/Math.PI)
-            }
-
             onCardSelected: selectCard(selected)
         }
     }
@@ -57,9 +44,6 @@ Page {
         y: parent.height/2 - (height/2) - (height + 10)
         player: Engine.getMiddle(0)
         onCardSelected: selectCard(selected)
-        Component.onCompleted: {
-            player.card = middle1
-        }
     }
     Card {
         id: middle2
@@ -68,9 +52,6 @@ Page {
         y: parent.height/2 - (height/2)
         player: Engine.getMiddle(1)
         onCardSelected: selectCard(selected)
-        Component.onCompleted: {
-            player.card = middle2
-        }
     }
     Card {
         id: middle3
@@ -79,9 +60,6 @@ Page {
         y: parent.height/2 - (height/2) + (height + 10)
         player: Engine.getMiddle(2)
         onCardSelected: selectCard(selected)
-        Component.onCompleted: {
-            player.card = middle3
-        }
     }
 
     Label {
@@ -91,6 +69,7 @@ Page {
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
+        color: Theme.highlightColor
         z: 3
     }
 
@@ -101,6 +80,7 @@ Page {
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
+        color: Theme.highlightColor
         z: 3
     }
 
@@ -142,6 +122,7 @@ Page {
 
     Component.onCompleted:
     {
+        recalcCards()
         createLogic()
         logic.zero()
     }
@@ -177,9 +158,11 @@ Page {
         {
             var card = rep.itemAt(c)
             var player = Engine.getPlayer((c+currentPlayer) % gameCanvas.numberOfPlayers)
-            card.player = player
-            player.card = card
+            card.setPlayer(player)
         }
+        middle1.setPlayer(Engine.getMiddle(0))
+        middle2.setPlayer(Engine.getMiddle(1))
+        middle3.setPlayer(Engine.getMiddle(2))
     }
 
     function stateChange() {

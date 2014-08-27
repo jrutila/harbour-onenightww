@@ -25,12 +25,8 @@ Item {
             throw "Not yourself!"
         card.flipped = true
         var curCard = curPlayer.card
-        var mx = card.x
-        var my = card.y
-        var cx = curCard.x
-        var cy = curCard.y
-        curCard.moveTo(mx, my)
-        card.moveTo(cx, cy)
+        curCard.moveTo(card)
+        card.moveTo(curCard)
 
         switched = card
         curPlayer.role.switched = card.player
