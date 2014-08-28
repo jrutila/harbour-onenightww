@@ -53,7 +53,10 @@ Page {
                 onClicked: {
                     Engine.startGame();
                     pageStack.clear();
-                    pageStack.push("GameBoard.qml", { gameCanvas: gameCanvas })
+                    pageStack.push("GameBoard.qml", {
+                      gameCanvas: gameCanvas,
+                      state: Engine.isRoleIn(Engine.Doppelganger) ? -1 : 0
+                    })
                 }
             }
         }

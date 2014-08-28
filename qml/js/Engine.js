@@ -8,20 +8,24 @@ function initGameState(st) {
     console.log("initing gamestate")
     gameState = st;
     gameState.roles =[
+    new Doppelganger(),
     new Werewolf(),
-    new Werewolf(),
-    new Seer(),
-    new Robber(),
     new Troublemaker(),
-    new Villager(),
-    new Villager(),
-    new Villager(),
-    new Drunk(),
+    new Seer(),
     new Minion(),
+    new Drunk(),
+    new Robber(),
+    new Werewolf(),
+    new Villager(),
+    new Villager(),
+    new Villager(),
     new Mason(),
     new Mason(),
     new Hunter(),
     new Tanner(),
+
+
+    new Insomniac(),
         ]
     gameState.readyToStart = false;
     gameState.players = []
@@ -60,6 +64,7 @@ function Troublemaker() {
 }
 function Mason() {
     this.name = "Mason"
+    this.logic = "Werewolf"
     this.info = villageTeam
 }
 function Minion() {
@@ -77,28 +82,44 @@ function Hunter() {
     this.info = "The player you point at will die. You are on <i>village team</i>"
 }
 
+function Doppelganger() {
+    this.name = "Doppelganger"
+    this.logic = "Doppelganger"
+    this.info = "You are ..."
+    this.newRole = undefined
+}
+
+function Insomniac() {
+    this.name = "Insomniac"
+    this.logic = "Insomniac"
+    this.info = "You are awake"
+}
+
 function Player(id) {
     this.id = id;
     this.title = "P "+(id+1);
     this.role = undefined;
+    this.switchedRole = undefined
 }
 
 function Middle(id) {
     this.id = id;
     this.title = "";
     this.role = undefined;
+    this.switchedRole = undefined
 }
 
 function startGame() {
     var selRols = gameState.selectedRoles.slice();
     /** TESTING **/
     //var pl = new Player(0)
-    //pl.role = gameState.roles[selRols.splice(4,1)[0]]
+    //pl.role = gameState.roles[selRols.splice(6,1)[0]]
     //gameState.players[0] = pl
     /** END **/
     for (var p = 0; p < gameState.numberOfPlayers; p++)
     {
-        var desiredIndex = Math.floor(Math.random() * selRols.length);
+        //var desiredIndex = Math.floor(Math.random() * selRols.length);
+        var desiredIndex = 0
         var roleInd = selRols.splice(desiredIndex, 1)[0];
         var pl = new Player(p)
         pl.role = gameState.roles[roleInd];
@@ -118,17 +139,21 @@ function getPlayer(id) {
     return gameState.players[id];
 }
 
-function getPlayers(roleType)
+function getPlayers(roleType, incNewr)
 {
     var ret = []
     for (var p in gameState.players)
     {
         if (gameState.players[p].role instanceof roleType)
             ret.push(gameState.players[p])
+        if (gameState.players[p].role.newRole instanceof roleType)
+            ret.push(gameState.players[p])
     }
+    /*
     for (var m in gameState.middles)
         if (gameState.middles[m].role instanceof roleType)
             ret.push(gameState.middles[m])
+            */
     return ret;
 }
 
@@ -161,6 +186,15 @@ function addRoles(list) {
 
 function isSelected(index)  {
     return gameState.selectedRoles.indexOf(index) > -1;
+}
+
+function isRoleIn(role) {
+    for (var r in gameState.selectedRoles)
+    {
+        if (gameState.roles[r] instanceof role)
+            return true
+    }
+    return false
 }
 
 function toggleRole(index) {

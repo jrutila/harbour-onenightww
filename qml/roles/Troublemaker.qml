@@ -2,41 +2,49 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/Engine.js" as Engine
 
-Item {
+Role {
     property var card1
     property var card2
     property bool skipped: false
 
     function zero() {
-        console.log("TROUBLEMAKER")
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        curPlayer.card.flipped = true
-        curPlayer.card.bringFront()
-        infoText.text = "You are the troublemaker. \
-         Click the player you want to choose with.\
-         Click in the middle if you want to skip."
+        myPlayer.card.bringFront()
     }
 
     function first(card) {
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        if (card.player == curPlayer)
+        myPlayer.card.flipped = true
+        infoText.text = "You are the troublemaker. "
+                + myPlayer.role.info
+        helpText.text = "Click in the middle if you want to skip."
+        if (state == -1)
+        {
+            helpText.text = "You can do the switch on the next round."
+            return [1, 3]
+        }
+        return [1]
+    }
+
+    function second(card) {
+        if (state == -1) return [2,3]
+
+        if (card.player == myPlayer)
             throw "Not yourself!"
         if (card.player instanceof Engine.Middle)
         {
             skipped = true
-            helpText.text = "Skipped."
+            helpText.text = "Skipped. Click some cards."
             return
         }
         card1 = card
         card1.zoom(true)
-
     }
 
-    function second(card) {
-        if (skipped) return
+    function third(card) {
+        if (state == -1) return [2,3]
 
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        if (card.player == curPlayer)
+        if (skipped) return [1,4]
+
+        if (card.player == myPlayer)
             throw "Not yourself!"
         if (card.player instanceof Engine.Middle)
             throw "Not from the middle!"
@@ -46,23 +54,27 @@ Item {
 
         card2.moveTo(card1)
         card1.moveTo(card2)
-    }
 
-    function third(card) {
-        if (skipped) return
-        card2.zoom(false)
-        card1.zoom(false)
+        if (myPlayer.role instanceof Engine.Doppelganger)
+        {
+            card2.player.switchedRole = card1.player.role
+            card1.player.switchedRole = card2.player.role
+        }
+
         switchBack.start()
+        return [1,2]
     }
 
     Timer {
         id: switchBack
-        interval: 500
+        interval: 1500
         running: false
         repeat: false
         onTriggered: {
             card1.moveBack()
             card2.moveBack()
+            card2.zoom(false)
+            card1.zoom(false)
         }
     }
 }

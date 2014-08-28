@@ -90,23 +90,22 @@ Page {
     property int clicks: 0
 
     function selectCard(cc) {
-
+        if (waitTimer.seconds > 0)
+            return
         switch(state)
         {
+        case -1:
         case 0:
             console.log("Card "+cc.player.id+" selected")
             if (clicks == 0)
-                logic.first(cc)
+                wait(logic.first(cc))
             else if (clicks == 1)
             {
-                var pl = Engine.getPlayer(currentPlayer)
-                logic.second(cc)
-                helpText.text = pl.role.info
+                wait(logic.second(cc))
             }
             else if (clicks == 2)
             {
-                logic.third(cc)
-                nextPlayer()
+                wait(logic.third(cc), nextPlayer)
             }
             clicks++
             break;
@@ -118,6 +117,44 @@ Page {
                 Engine.vote(curPlayer, cc.player)
                 nextPlayer()
             }
+        }
+    }
+
+    function wait(sec, done) {
+        if (!sec || true)
+        {
+            done && done()
+            return
+        }
+        waitTimer.done = done
+        waitTimer.seconds = sec[0]
+    }
+
+    Timer {
+        property int seconds: 0
+        property var done
+
+        id: waitTimer
+        interval: 1000
+        running: seconds > 0
+        repeat: true
+        onTriggered: {
+            seconds--
+            if (seconds <= 0)
+                done && done();
+        }
+    }
+
+    Rectangle {
+        visible: waitTimer.seconds > 0
+        anchors.fill: parent
+        color: "transparent"
+        Label {
+            text: "Wait for "+waitTimer.seconds
+            font.pixelSize: Theme.fontSizeExtraLarge
+            color: Theme.secondaryColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
@@ -150,6 +187,7 @@ Page {
         middle2.flipped = false
         middle3.flipped = false
         helpText.text = ""
+        infoText.text = ""
         if (currentPlayer == gameCanvas.numberOfPlayers - 1)
         {
             stateChange()
@@ -177,7 +215,16 @@ Page {
 
     function stateChange() {
         console.log("State change!")
-        if (state == 0)
+        if (state == -1)
+        {
+            state = 0
+            currentPlayer = 0
+            pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(0) })
+               .accepted.connect(function() {
+                   doPlayerStuff()
+                })
+        }
+        else if (state == 0)
         {
             state = 1
             var dialog = pageStack.push("DayDialog.qml");
@@ -204,11 +251,23 @@ Page {
 
     function createLogic() {
         var pl = Engine.getPlayer(currentPlayer)
-        lComp = Qt.createComponent("../roles/"+(pl.role.logic || pl.role.name)+".qml")
+        if (!pl.logic)
+        {
+            var ll = loadLogic(pl.role)
+            pl.logic = ll
+        }
+        logic = pl.logic
+        logic.myPlayer = pl
+        logic.myRole = pl.role
+    }
+
+    function loadLogic(role)
+    {
+        lComp = Qt.createComponent("../roles/"+(role.logic || role.name)+".qml")
         if (lComp.status == Component.Error)
             console.log("ERR: "+lComp.errorString())
         if (lComp.status == Component.Ready)
-            logic = lComp.createObject(gameBoard)
+            return lComp.createObject(gameBoard)
     }
 
     Button {

@@ -9,6 +9,8 @@ Rectangle {
     property int ind
     property var ang: 0
     property bool flipped: false
+    property bool showNewRole: false
+    property bool showSwitchedRole: false
     property alias card: flCard
     signal cardSelected(var selected)
     color: "transparent"
@@ -39,6 +41,7 @@ Rectangle {
 
     function bringFront() {
         moveAnim.toY.to = -40
+        moveAnim.toX.to = 0
         moveAnim.start()
     }
 
@@ -91,10 +94,25 @@ Rectangle {
 
         back: Rectangle {
             anchors.fill: parent
-            color: Theme.highlightColor
-
+            color: { //Theme.highlightColor
+                if (cardItem.ind == 0)
+                    return "red"
+                if (cardItem.ind == 1)
+                    return "blue"
+                if (cardItem.ind == 2)
+                    return "green"
+                if (cardItem.ind == 3)
+                    return "yellow"
+                return Theme.highlightColor
+            }
             Label {
-                text: player.role.name
+                text: {
+                    if (showSwitchedRole && player.switchedRole)
+                        return player.switchedRole.name
+                    if (showNewRole && player.role.newRole)
+                        return player.role.newRole.name
+                    return player.role.name
+                }
                 color: Theme.primaryColor
                 font.pixelSize: 18
             }
@@ -106,7 +124,7 @@ Rectangle {
                 origin.x: flCard.width/2
                 origin.y: flCard.height/2
                 axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-                angle: 0    // the default angle
+                angle: 160    // the default angle
             },
             Rotation {
                 id: normRot
@@ -155,8 +173,8 @@ Rectangle {
             NumberAnimation { target: flipRot; property: "angle"; duration: 300 }
             NumberAnimation { target: flipScale; property: "xScale"; duration: 300 }
             NumberAnimation { target: flipScale; property: "yScale"; duration: 300 }
-            NumberAnimation { target: cardMove; property: "y"; duration: 500 }
-            NumberAnimation { target: cardMove; property: "x"; duration: 500 }
+            //NumberAnimation { target: cardMove; property: "y"; duration: 500 }
+            //NumberAnimation { target: cardMove; property: "x"; duration: 500 }
         }
 
         states: State {

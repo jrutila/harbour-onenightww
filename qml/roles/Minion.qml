@@ -1,35 +1,43 @@
 import QtQuick 2.0
 import "../js/Engine.js" as Engine
 
-QtObject {
+Role {
+    property int state: gameBoard.state
+    property var wolves
+
     function zero() {
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        infoText.text = "Click a card to start"
-        curPlayer.card.bringFront()
+        helpText.text = "Click a card to start"
+        myPlayer.card.bringFront()
     }
 
     function first(card) {
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
-        curPlayer.card.flipped = true
-        infoText.text = "You are the minion. Click any card to see werewolves"
+        myPlayer.card.flipped = true
+        infoText.text = "You are the minion."
+        helpText.text = "Click any card to see werewolves"
+        if (state == -1)
+        {
+            helpText.text = "You see the werewolves in next round."
+        }
     }
 
     function second(card) {
-        var wolves = Engine.getPlayers(Engine.Werewolf)
+        if (state == -1) return [1,3]
+        wolves = Engine.getPlayers(Engine.Werewolf)
         for (var w in wolves)
         {
-            console.log(wolves[w].card)
+            wolves[w].card.showNewRole = true
             wolves[w].card.flipped = true
         }
         infoText.text = "Click a card once more to close the cards"
+        return [2, 4]
     }
 
     function third(card) {
-        var wolves = Engine.getPlayers(Engine.Werewolf)
+        if (state == -1) return [1,3]
         for (var w in wolves)
         {
             wolves[w].card.flipped = false
+            wolves[w].card.showNewRole = false
         }
     }
 }

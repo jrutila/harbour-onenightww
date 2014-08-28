@@ -1,24 +1,25 @@
 import QtQuick 2.0
 import "../js/Engine.js" as Engine
 
-QtObject {
+Role {
     function zero() {
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        infoText.text = "Click a card to start"
-        curPlayer.card.bringFront()
-        console.log("Current player "+currentPlayer+" is "+curPlayer.role.name)
+        helpText.text = "Click a card to start"
+        myPlayer.card.bringFront()
     }
 
     function first(card) {
-        var curPlayer = Engine.getPlayer(currentPlayer)
-        curPlayer.card.flipped = true
-        infoText.text = "You are the seer. \
-        Click any player or middle card to see it. \
+        myPlayer.card.flipped = true
+        infoText.text = "You are the seer. "+myPlayer.role.info
+        helpText.text = "Click any player or any middle card to see it. \
         Click yourself to skip."
+        if (state == -1)
+        {
+            helpText.text = "You can peek at the card next round"
+        }
     }
 
     function second(card) {
-        var curPlayer = Engine.getPlayer(currentPlayer)
+        if (state == -1) return [1,3]
         if (card.player instanceof Engine.Middle)
         {
             var sk = Math.floor(Math.random() * 3)
@@ -31,6 +32,7 @@ QtObject {
                     var card = md.pop()
                     card.player = m
                     m.card = card
+                    card.showSwitchedRole = true
                     card.flipped = true
                 } else {
                     var card = middle2
@@ -39,9 +41,16 @@ QtObject {
                 }
             }
         }
-        else if (curPlayer.card == card) {
-            helpText.text = "Skipped."
+        else if (myPlayer.card == card) {
+            helpText.text = "Skipped. Click some cards"
         }  else {
+            if (card.player.role instanceof Engine.Doppelganger)
+                card.showNewRole = false
+            if (card.player.switchedRole)
+            {
+                console.log("Showing switched role")
+                card.showSwitchedRole = true
+            }
             card.flipped = true
         }
 
@@ -49,5 +58,6 @@ QtObject {
     }
 
     function third(card) {
+        if (state == -1) return [1,3]
     }
 }

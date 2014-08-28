@@ -33,12 +33,13 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     qml/roles/Villager.qml \
     qml/roles/Werewolf.qml \
     qml/roles/Seer.qml \
-    qml/roles/Mason.qml \
     qml/roles/Robber.qml \
     qml/roles/Drunk.qml \
     qml/roles/Minion.qml \
     qml/pages/DayDialog.qml \
-    qml/roles/Troublemaker.qml
+    qml/roles/Troublemaker.qml \
+    qml/roles/Doppelganger.qml \
+    qml/roles/Role.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
