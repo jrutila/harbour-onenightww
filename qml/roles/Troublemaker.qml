@@ -61,20 +61,6 @@ Role {
             card1.player.switchedRole = card2.player.role
         }
 
-        switchBack.start()
         return [1,2]
-    }
-
-    Timer {
-        id: switchBack
-        interval: 1500
-        running: false
-        repeat: false
-        onTriggered: {
-            card1.moveBack()
-            card2.moveBack()
-            card2.zoom(false)
-            card1.zoom(false)
-        }
     }
 }

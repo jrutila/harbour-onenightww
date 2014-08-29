@@ -102,10 +102,11 @@ Rectangle {
                 if (cardItem.ind == 2)
                     return "green"
                 if (cardItem.ind == 3)
-                    return "yellow"
+                    return "darkyellow"
                 return Theme.highlightColor
             }
             Label {
+                id: mainLbl
                 text: {
                     if (showSwitchedRole && player.switchedRole)
                         return player.switchedRole.name
@@ -114,6 +115,11 @@ Rectangle {
                     return player.role.name
                 }
                 color: Theme.primaryColor
+                font.pixelSize: 18
+            }
+            Label {
+                anchors.top: mainLbl.bottom
+                text: player.switchedRole ? "("+player.switchedRole.name+")" : "-"
                 font.pixelSize: 18
             }
         }

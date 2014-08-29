@@ -8,6 +8,7 @@ Role {
     }
 
     function first(card) {
+        myPlayer.card.showSwitchedRole = false
         myPlayer.card.flipped = true
         infoText.text = "You are the seer. "+myPlayer.role.info
         helpText.text = "Click any player or any middle card to see it. \
@@ -44,13 +45,8 @@ Role {
         else if (myPlayer.card == card) {
             helpText.text = "Skipped. Click some cards"
         }  else {
-            if (card.player.role instanceof Engine.Doppelganger)
-                card.showNewRole = false
-            if (card.player.switchedRole)
-            {
-                console.log("Showing switched role")
-                card.showSwitchedRole = true
-            }
+            card.showNewRole = false
+            card.showSwitchedRole = true
             card.flipped = true
         }
 
@@ -59,5 +55,7 @@ Role {
 
     function third(card) {
         if (state == -1) return [1,3]
+        card.flipped = false
+        card.showSwitchedRole = false
     }
 }

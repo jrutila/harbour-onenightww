@@ -23,6 +23,31 @@ Role {
         {
             myPlayer.card.moveTo(middle2)
             middle2.moveTo(myPlayer.card)
+
+            if (myPlayer.role instanceof Engine.Doppelganger)
+            {
+                var sk = Math.floor(Math.random() * 3)
+                var md = [middle1, middle3]
+                for (var i = 0; i < 3; i++)
+                {
+                    var m = Engine.getMiddle(i)
+                    if (i != sk)
+                    {
+                        var card = md.pop()
+                        card.player = m
+                        m.card = card
+                    } else {
+                        var card = middle2
+                        card.player = m
+                        m.card = card
+                        card.showSwitchedRole = false
+                        card.zoom(true)
+                    }
+                }
+                console.log("DoppelgangerDrunk switched with "+middle2.player.role.name)
+                myPlayer.switchedRole = middle2.player.role
+                middle2.player.switchedRole = myPlayer.role
+            }
         }
 
         infoText.text = "Click any card once more to close the cards"
@@ -31,19 +56,8 @@ Role {
 
     function third(card) {
         myPlayer.card.flipped = false
-        switchBack.start()
+        middle2.zoom(false)
         return [1]
-    }
-
-    Timer {
-        id: switchBack
-        interval: 1500
-        running: false
-        repeat: false
-        onTriggered: {
-            myPlayer.card.moveBack()
-            middle2.moveBack()
-        }
     }
 }
 

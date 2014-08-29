@@ -162,7 +162,7 @@ Page {
         if (!inited && status === PageStatus.Active && pageStack.depth === 1) {
             console.log("Show first player dialog")
             inited = true
-            pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(0) })
+            pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
                .accepted.connect(function() {
                    doPlayerStuff()
                 })
@@ -177,28 +177,51 @@ Page {
 
     }
 
-    function nextPlayer() {
-
+    function resetUI() {
+        console.log("RESET UI")
         for (var c = 0; c < rep.count; c++)
         {
-            rep.itemAt(c).flipped = false
+            var card = rep.itemAt(c)
+            card.showNewRole = false
+            card.showSwitchedRole = false
+            card.flipped = false
+            card.moveBack()
+            card.zoom(false)
         }
-        middle1.flipped = false
-        middle2.flipped = false
-        middle3.flipped = false
+        var md = [middle1, middle2, middle3]
+        for (var m = 0; m < 3; m++)
+        {
+            var card = md[m]
+            card.zoom(false)
+            card.flipped = false
+            card.showNewRole = false
+            card.showSwitchedRole = false
+            card.moveBack()
+        }
         helpText.text = ""
         infoText.text = ""
+
+    }
+
+    PlayerDialog {
+        id: dialog
+        player: Engine.getPlayer(currentPlayer+1)
+
+        onOpened: resetUI()
+        onAccepted: {
+            currentPlayer++
+            doPlayerStuff()
+        }
+    }
+
+    function nextPlayer() {
         if (currentPlayer == gameCanvas.numberOfPlayers - 1)
         {
+            resetUI();
             stateChange()
             return
         }
-
-        var dialog = pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(currentPlayer+1) });
-        dialog.accepted.connect(function() {
-            currentPlayer++
-            doPlayerStuff()
-        })
+        pageStack.push(dialog);
     }
 
     function recalcCards() {
@@ -219,7 +242,7 @@ Page {
         {
             state = 0
             currentPlayer = 0
-            pageStack.push("../PlayerDialog.qml", { player: Engine.getPlayer(0) })
+            pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
                .accepted.connect(function() {
                    doPlayerStuff()
                 })

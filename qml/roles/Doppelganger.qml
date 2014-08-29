@@ -13,7 +13,7 @@ Role {
         if (state == 0)
         {
             infoText.text = "You were the Doppelganger."+
-            "Now "+ (myPlayer.switchedRole != undefined ? myPlayer.switchedRole.name : myPlayer.newRole.name)
+            "Now "+ (myPlayer.switchedRole != undefined ? myPlayer.switchedRole.name : myPlayer.role.newRole.name)
             myPlayer.card.showNewRole = true
             myPlayer.card.showSwitchedRole = true
         }
@@ -23,6 +23,8 @@ Role {
 
     function first(card) {
         if (state == 0) return [1, 3]
+        if (card.player == myPlayer)
+            throw "Not yourself"
         if (card.player instanceof Engine.Middle)
         {
             skipped = true
@@ -81,8 +83,8 @@ Role {
         repeat: false
         onTriggered: {
             myPlayer.card.showNewRole = false
+            myPlayer.card.showSwitchedRole = false
             myPlayer.card.moveBack()
-            middle2.moveBack()
         }
     }
 }

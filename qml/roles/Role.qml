@@ -6,4 +6,8 @@ Item {
     property int state: gameBoard.state
     property var myRole
     property var myPlayer
+
+    function hidden() {
+
+    }
 }

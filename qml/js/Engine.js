@@ -8,13 +8,13 @@ function initGameState(st) {
     console.log("initing gamestate")
     gameState = st;
     gameState.roles =[
+    new Drunk(),
+    new Robber(),
     new Doppelganger(),
     new Werewolf(),
     new Troublemaker(),
     new Seer(),
     new Minion(),
-    new Drunk(),
-    new Robber(),
     new Werewolf(),
     new Villager(),
     new Villager(),
@@ -118,8 +118,8 @@ function startGame() {
     /** END **/
     for (var p = 0; p < gameState.numberOfPlayers; p++)
     {
-        //var desiredIndex = Math.floor(Math.random() * selRols.length);
-        var desiredIndex = 0
+        var desiredIndex = Math.floor(Math.random() * selRols.length);
+        //var desiredIndex = 0
         var roleInd = selRols.splice(desiredIndex, 1)[0];
         var pl = new Player(p)
         pl.role = gameState.roles[roleInd];
@@ -191,7 +191,7 @@ function isSelected(index)  {
 function isRoleIn(role) {
     for (var r in gameState.selectedRoles)
     {
-        if (gameState.roles[r] instanceof role)
+        if (gameState.roles[gameState.selectedRoles[r]] instanceof role)
             return true
     }
     return false

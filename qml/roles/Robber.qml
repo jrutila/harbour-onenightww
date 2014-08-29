@@ -49,24 +49,11 @@ Role {
         if (skipped) return [1, 3]
         myPlayer.card.flipped = false
         switched.flipped = false
-        switchBack.start()
 
         if (myPlayer.role instanceof Engine.Doppelganger)
         {
             switched.player.switchedRole = myPlayer.role
             myPlayer.switchedRole = switched.player.role
-        }
-    }
-
-    Timer {
-        id: switchBack
-        interval: 500
-        running: false
-        repeat: false
-        onTriggered: {
-            switched.moveBack()
-            myPlayer.card.moveBack()
-            switched.showSwitchedRole = false
         }
     }
 }
