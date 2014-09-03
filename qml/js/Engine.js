@@ -242,7 +242,7 @@ function calcFinalRoles()
         var pl = players.shift()
         if (role)
         {
-            console.log("try "+role.name)
+            console.log("try "+role.name+" with "+pl.title)
             role.doRole(pl)
         }
     }

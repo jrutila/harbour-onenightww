@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "js/Engine.js" as Engine
 
 Rectangle {
     id: cardItem
@@ -19,8 +20,9 @@ Rectangle {
     Label {
         text: player != undefined ? player.title : "Sokko"
         color: Theme.primaryColor
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: flCard.bottom
+        anchors.topMargin: gameBoard.state == 2 ? 40 : 20
     }
 
     MouseArea {
@@ -80,7 +82,6 @@ Rectangle {
         height: 100
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        z: 2
 
         MouseArea {
             anchors.fill: parent
@@ -90,9 +91,10 @@ Rectangle {
         front: Image {
             source: "../images/cardback.png"
             Label {
-                anchors.bottom: parent.bottom
+                visible: Engine.getGame().debugMode
+                anchors.bottom: flCard.bottom
                 text: player.role.name
-                color: "black"
+                color: "red"
                 font.pixelSize: 18
             }
         }
@@ -209,7 +211,7 @@ Rectangle {
             PropertyChanges { target: normRot; angle: 0 }
             PropertyChanges { target: flipScale; xScale: 2.0 }
             PropertyChanges { target: flipScale; yScale: 2.0 }
-            PropertyChanges { target: flCard; z: 5 }
+            PropertyChanges { target: cardItem; z: 5 }
             when: flCard.flipped
         }
     }

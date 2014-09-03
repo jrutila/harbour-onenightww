@@ -38,7 +38,12 @@ Page {
     forwardNavigation: true
     property GameCanvas gameState//: Engine.getGame()
 
-    Column {
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: column.height
+        contentWidth: column.width
+
+        Column {
         id: column
 
         width: page.width
@@ -61,20 +66,29 @@ Page {
             width: parent.width
             onValueChanged: gameState.numberOfPlayers = value
         }
+        }
 
-        Button {
-            text: qsTr("Next")
-            id: btn
-            //anchors.bottom: parent.bottom;
-            //anchors.left: parent.left
-            onClicked: {
-                onClicked: pageStack.push("./SecondPage.qml")
+        PullDownMenu {
+            Row {
+            Switch {
+                checked: gameState.debugMode
+            }
+            Label {
+                text: "Debug mode"
+            }
             }
         }
     }
 
     Component.onCompleted: {
         Engine.initGameState(gameState)
+    }
+
+    onStatusChanged: {
+        console.log("status "+PageStatus.Active)
+        if (status === PageStatus.Active && pageStack.depth === 1) {
+            pageStack.pushAttached("SecondPage.qml")
+        }
     }
 }
 

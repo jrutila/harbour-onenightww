@@ -43,10 +43,6 @@ ApplicationWindow
         StartPage { gameState: gameSt }
     }
 
-    Component.onCompleted: {
-        Engine.initGameState(gameSt)
-    }
-
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
 }

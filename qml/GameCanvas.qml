@@ -11,4 +11,6 @@ QtObject {
     property var switches
     property var votes
     property var voted
+
+    property bool debugMode: true
 }

@@ -55,6 +55,5 @@ Role {
 
     function third(card) {
         if (state == -1) return [1,3]
-        card.flipped = false
     }
 }

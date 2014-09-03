@@ -10,6 +10,15 @@ Page {
     property var curLogic
     property int state: 0
     property bool inited: false
+    property var lComp
+    property var logic
+    property int clicks: 0
+
+
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: parent.height
+        contentWidth: parent.width
 
     Repeater {
         id: rep
@@ -36,7 +45,7 @@ Page {
             }
 
             Label {
-                visible: state == 2
+                visible: gameBoard.state == 2
                 color: "red"
                 text: gameCanvas.votes[card.player.id]
                 font.pixelSize: Theme.fontSizeHuge
@@ -97,9 +106,62 @@ Page {
         z: 3
     }
 
-    property var lComp
-    property var logic
-    property int clicks: 0
+    Timer {
+        property int seconds: 0
+        property var done
+
+        id: waitTimer
+        interval: 1000
+        running: seconds > 0
+        repeat: true
+        onTriggered: {
+            seconds--
+            if (seconds <= 0)
+                done && done();
+        }
+    }
+
+    Rectangle {
+        visible: waitTimer.seconds > 0
+        anchors.fill: parent
+        color: "transparent"
+        Label {
+            text: "Wait for "+waitTimer.seconds
+            font.pixelSize: Theme.fontSizeExtraLarge
+            color: Theme.secondaryColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+        }
+    }
+
+    PullDownMenu {
+        MenuItem {
+            text: qsTr("Restart")
+            enabled: true
+            onClicked: {
+                pageStack.replace("StartPage.qml", { gameState: gameCanvas })
+            }
+        }
+        MenuItem {
+            text: "Day"
+            onClicked: {
+                stateChange()
+            }
+            anchors.right: parent.right
+        }
+    }
+    }
+
+    onStatusChanged: {
+        if (!inited && status === PageStatus.Active && pageStack.depth === 1) {
+            console.log("Show first player dialog")
+            inited = true
+            pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
+               .accepted.connect(function() {
+                   doPlayerStuff()
+                })
+        }
+    }
 
     function selectCard(cc) {
         if (waitTimer.seconds > 0)
@@ -142,44 +204,6 @@ Page {
         waitTimer.seconds = sec[0]
     }
 
-    Timer {
-        property int seconds: 0
-        property var done
-
-        id: waitTimer
-        interval: 1000
-        running: seconds > 0
-        repeat: true
-        onTriggered: {
-            seconds--
-            if (seconds <= 0)
-                done && done();
-        }
-    }
-
-    Rectangle {
-        visible: waitTimer.seconds > 0
-        anchors.fill: parent
-        color: "transparent"
-        Label {
-            text: "Wait for "+waitTimer.seconds
-            font.pixelSize: Theme.fontSizeExtraLarge
-            color: Theme.secondaryColor
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-        }
-    }
-
-    onStatusChanged: {
-        if (!inited && status === PageStatus.Active && pageStack.depth === 1) {
-            console.log("Show first player dialog")
-            inited = true
-            pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
-               .accepted.connect(function() {
-                   doPlayerStuff()
-                })
-        }
-    }
 
     function doPlayerStuff() {
         recalcCards()
@@ -189,21 +213,31 @@ Page {
 
     }
 
+    Timer {
+        id: resetTimer
+        interval: 1000
+        running: false
+        repeat: false
+        onTriggered: {
+            console.log("RESET FLIPS")
+            for (var c = 0; c < rep.count; c++)
+            {
+                var card = rep.itemAt(c)
+                card.flipped = false
+                card.zoom(false)
+            }
+            var md = [middle1, middle2, middle3]
+            for (var m = 0; m < 3; m++)
+            {
+                var card = md[m]
+                card.zoom(false)
+                card.flipped = false
+            }
+        }
+    }
+
     function resetFlips() {
-        console.log("RESET FLIPS")
-        for (var c = 0; c < rep.count; c++)
-        {
-            var card = rep.itemAt(c)
-            card.flipped = false
-            card.zoom(false)
-        }
-        var md = [middle1, middle2, middle3]
-        for (var m = 0; m < 3; m++)
-        {
-            var card = md[m]
-            card.zoom(false)
-            card.flipped = false
-        }
+        resetTimer.start();
     }
 
     function resetUI() {
@@ -236,7 +270,9 @@ Page {
         id: dialog
         player: Engine.getPlayer(currentPlayer+1)
 
-        onOpened: resetFlips()
+        onOpened: {
+            resetFlips();
+        }
         onAccepted: {
             resetUI()
             currentPlayer++
@@ -247,7 +283,6 @@ Page {
     function nextPlayer() {
         if (currentPlayer == gameCanvas.numberOfPlayers - 1)
         {
-            resetUI();
             stateChange()
             return
         }
@@ -283,12 +318,17 @@ Page {
             state = 1
             var dialog = pageStack.push("DayDialog.qml");
             dialog.accepted.connect(function() {
+                resetUI();
                 currentPlayer = 0
                 middle1.visible = false
                 middle2.visible = false
                 middle3.visible = false
                 recalcCards();
                 infoText.text = "Click the player to kill"
+            })
+            dialog.opened.connect(function() {
+                console.log("Day dialog opened")
+                resetFlips();
             })
         } else if (state == 1)
         {
@@ -325,19 +365,5 @@ Page {
             console.log("ERR: "+lComp.errorString())
         if (lComp.status == Component.Ready)
             return lComp.createObject(gameBoard)
-    }
-
-    Button {
-        text: "Restart"
-        onClicked: {
-            pageStack.replace("StartPage.qml", { gameState: gameCanvas })
-        }
-    }
-    Button {
-        text: "Day"
-        onClicked: {
-            stateChange()
-        }
-        anchors.right: parent.right
     }
 }
