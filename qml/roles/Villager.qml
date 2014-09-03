@@ -22,7 +22,6 @@ Role {
 
     function third(card) {
         myPlayer.card.flipped = false
-        myPlayer.card.moveBack()
         return [1]
     }
 }

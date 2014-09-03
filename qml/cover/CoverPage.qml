@@ -36,6 +36,6 @@ CoverBackground {
     Label {
         id: label
         anchors.centerIn: parent
-        text: Engine.getPlayer(Engine.getGame().currentPlayer).title
+        text: "One Night Ultimate Werewolf"
     }
 }

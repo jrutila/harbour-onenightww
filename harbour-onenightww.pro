@@ -40,7 +40,17 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     qml/roles/Troublemaker.qml \
     qml/roles/Doppelganger.qml \
     qml/roles/Role.qml \
-    qml/pages/PlayerDialog.qml
+    qml/pages/PlayerDialog.qml \
+    images/Werewolf.png \
+    images/Troublemaker.png \
+    images/Seer.png \
+    images/Robber.png \
+    images/Mason.png \
+    images/Insomniac.png \
+    images/Drunk.png \
+    images/Doppelganger.png \
+    images/cardback.png \
+    images/Minion.png
 
 # to disable building translations every time, comment out the
 # following CONFIG line

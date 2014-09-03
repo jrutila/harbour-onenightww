@@ -23,6 +23,7 @@ Role {
     }
 
     function second(card) {
+        if (state == -1) return [1, 4]
         if (card.player == myPlayer)
             throw "Not yourself!"
         if (card.player instanceof Engine.Middle)
@@ -38,7 +39,7 @@ Role {
         card.moveTo(myPlayer.card)
 
         switched = card
-        myPlayer.role.switched = card.player
+        myRole.switched = card.player
 
         infoText.text = "You are now "+switched.player.role.name+switched.player.role.name
                 + " " + switched.player.role.info
@@ -46,6 +47,7 @@ Role {
     }
 
     function third(card) {
+        if (state == -1) return [1, 4]
         if (skipped) return [1, 3]
         myPlayer.card.flipped = false
         switched.flipped = false

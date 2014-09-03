@@ -8,12 +8,12 @@ function initGameState(st) {
     console.log("initing gamestate")
     gameState = st;
     gameState.roles =[
-    new Drunk(),
-    new Robber(),
     new Doppelganger(),
-    new Werewolf(),
-    new Troublemaker(),
     new Seer(),
+    new Robber(),
+    new Troublemaker(),
+    new Drunk(),
+    new Werewolf(),
     new Minion(),
     new Werewolf(),
     new Villager(),
@@ -31,6 +31,7 @@ function initGameState(st) {
     gameState.players = []
     gameState.middles = []
     gameState.votes = {}
+    gameState.voted = {}
 }
 var villageTeam = "You are on <i>village team</i>. Kill at least one werewolf."
 
@@ -42,6 +43,23 @@ function Villager() {
 function Drunk() {
     this.name = "Drunk"
     this.info = "You don't know who you are"
+
+    this.doRole = function(pl) {
+        var rm = Math.floor(Math.random() * 3)
+        var m = getMiddle(rm)
+        var mr = m.switchedRole || m.role
+        if (pl.switchedRole)
+        {
+            console.log("DoppelDrunk already switched")
+            mr = pl.switchedRole
+        }
+
+        m.role = pl.role
+        pl.role = mr
+        console.log("Drunk")
+        console.log(pl.title + " is now "+pl.role.name)
+        console.log(m.title + " is now "+m.role.name)
+    }
 }
 
 function Werewolf() {
@@ -56,11 +74,35 @@ function Robber() {
     this.name = "Robber"
     this.switched = null
     this.info = "You are..."
+
+    this.doRole = function(pl) {
+        if (!this.switched) return
+        var newRole = this.switched.role
+        this.switched.role = pl.role
+        pl.role = newRole
+        console.log("Robber")
+        console.log(pl.title + " is now "+pl.role.name)
+        console.log(this.switched.title + " is now "+this.switched.role.name)
+    }
 }
 function Troublemaker() {
     this.name = "Troublemaker"
     this.switched = []
     this.info = villageTeam
+
+    this.doRole = function(pl) {
+        if (!this.switched || this.switched.length != 2)
+            return
+        var a = this.switched[0]
+        var b = this.switched[1]
+        var ar = a.role
+        var br = b.role
+        a.role = br
+        b.role = ar
+        console.log("Troublemaker")
+        console.log(a.title + " is now "+a.role.name)
+        console.log(b.title + " is now "+b.role.name)
+    }
 }
 function Mason() {
     this.name = "Mason"
@@ -87,6 +129,14 @@ function Doppelganger() {
     this.logic = "Doppelganger"
     this.info = "You are ..."
     this.newRole = undefined
+
+    this.doRole = function(pl) {
+        if (this.newRole && this.newRole.doRole)
+        {
+            console.log("Doppelganger - "+this.newRole.name)
+            this.newRole.doRole(pl);
+        }
+    }
 }
 
 function Insomniac() {
@@ -124,6 +174,7 @@ function startGame() {
         var pl = new Player(p)
         pl.role = gameState.roles[roleInd];
         gameState.players[p] = pl;
+        gameState.votes[pl.id] = 0;
     }
     for (var s = 0; s < 3; s++)
     {
@@ -139,14 +190,14 @@ function getPlayer(id) {
     return gameState.players[id];
 }
 
-function getPlayers(roleType, incNewr)
+function getPlayers(roleType, originals)
 {
     var ret = []
     for (var p in gameState.players)
     {
         if (gameState.players[p].role instanceof roleType)
             ret.push(gameState.players[p])
-        if (gameState.players[p].role.newRole instanceof roleType)
+        if (!originals && gameState.players[p].role.newRole instanceof roleType)
             ret.push(gameState.players[p])
     }
     /*
@@ -163,19 +214,45 @@ function getMiddle(id) {
 
 function readyToStart() {
     var roles = gameState.selectedRoles.length
-    console.log("roles "+roles)
     gameState.readyToStart = gameState.numberOfPlayers + 3 == roles;
     return gameState.readyToStart;
 }
 
-function calcResults()
+function calcFinalRoles()
 {
+    console.log("Calculating final roles")
+    var roles = [Doppelganger, Robber, Troublemaker, Drunk]
+    var players = []
+    for (var r in roles)
+    {
+        var pl = getPlayers(roles[r], true)[0]
+        players.push(pl)
+        if (pl)
+        {
+            console.log(pl.role.name)
+            roles[r] = pl.role
+        }
+        else
+            roles[r] = undefined
+    }
 
+    while (roles.length)
+    {
+        var role = roles.shift()
+        var pl = players.shift()
+        if (role)
+        {
+            console.log("try "+role.name)
+            role.doRole(pl)
+        }
+    }
 }
 
 function vote(voter, voted)
 {
-    gameState.votes[voter] = voted
+    gameState.voted[voter.id] = voted.id
+    gameState.votes[voted.id]++;
+    console.log(voter.title + " voted for "+voted.title)
 }
 
 function addRoles(list) {
@@ -203,6 +280,5 @@ function toggleRole(index) {
         gameState.selectedRoles.splice(gameState.selectedRoles.indexOf(index), 1);
     else if (roles < gameState.numberOfPlayers + 3)
         gameState.selectedRoles.push(index);
-    console.log(gameState.selectedRoles)
     readyToStart();
 }

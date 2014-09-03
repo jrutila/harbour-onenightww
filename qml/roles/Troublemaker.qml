@@ -60,6 +60,8 @@ Role {
             card2.player.switchedRole = card1.player.role
             card1.player.switchedRole = card2.player.role
         }
+        myRole.switched.push(card1.player)
+        myRole.switched.push(card2.player)
 
         return [1,2]
     }

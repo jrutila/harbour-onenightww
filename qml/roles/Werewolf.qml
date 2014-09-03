@@ -16,6 +16,14 @@ Role {
         {
             helpText.text = "You see others in next round. Click a card."
         }
+        if (state == 0)
+        {
+            var others = Engine.getPlayers(myRole.constructor)
+            for (var o in others)
+            {
+                others[o].card.showNewRole = true
+            }
+        }
     }
 
     function second(card) {
@@ -23,7 +31,6 @@ Role {
         var others = Engine.getPlayers(myRole.constructor)
         for (var o in others)
         {
-            others[o].card.showNewRole = true
             others[o].card.flipped = true
         }
         helpText.text = "Click a card once more to close the cards"
@@ -35,7 +42,7 @@ Role {
         for (var o in others)
         {
             others[o].card.flipped = false
-            others[o].card.showNewRole = false
         }
+        return [1,2]
     }
 }

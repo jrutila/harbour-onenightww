@@ -39,5 +39,6 @@ Role {
             wolves[w].card.flipped = false
             wolves[w].card.showNewRole = false
         }
+        return [1,2]
     }
 }

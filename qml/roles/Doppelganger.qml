@@ -12,17 +12,26 @@ Role {
         infoText.text = "You are the Doppelganger"
         if (state == 0)
         {
-            infoText.text = "You were the Doppelganger."+
-            "Now "+ (myPlayer.switchedRole != undefined ? myPlayer.switchedRole.name : myPlayer.role.newRole.name)
+            infoText.text = "You were the Doppelganger."
+            if (myPlayer.role.newRole instanceof Engine.Drunk)
+                infoText.text += "Now you are Drunk and don't know your new role."
+            else
+                infoText.text += "Now "+ (myPlayer.switchedRole != undefined ? myPlayer.switchedRole.name : myPlayer.role.newRole.name)
             myPlayer.card.showNewRole = true
-            myPlayer.card.showSwitchedRole = true
         }
         myPlayer.card.flipped = true
         myPlayer.card.bringFront()
     }
 
     function first(card) {
-        if (state == 0) return [1, 3]
+        if (state == 0) {
+            if (!myPlayer.role.newRole instanceof Engine.Drunk)
+            {
+                infoText.text = "And swithed to "+myPlayer.switchedRole.name
+                myPlayer.card.showSwitchedRole = true
+            }
+            return [1, 3]
+        }
         if (card.player == myPlayer)
             throw "Not yourself"
         if (card.player instanceof Engine.Middle)
@@ -32,7 +41,7 @@ Role {
             return
         }
         card.flipped = true
-        myRole = card.player.role
+        myRole = new card.player.role.constructor()
         helpText.text = "Your new role is "+myRole.name
         myPlayer.role.newRole = myRole
 
@@ -61,7 +70,7 @@ Role {
 
     function third(card) {
         if (skipped) {
-            myPlayer.card.showNewRole = false
+            myPlayer.card.showSwitchedRole = false
             return [1,3]
         }
         if (state == 0)
@@ -74,17 +83,5 @@ Role {
                 return [1,3]
         }
         return logic.third(card)
-    }
-
-    Timer {
-        id: switchBack
-        interval: 500
-        running: false
-        repeat: false
-        onTriggered: {
-            myPlayer.card.showNewRole = false
-            myPlayer.card.showSwitchedRole = false
-            myPlayer.card.moveBack()
-        }
     }
 }

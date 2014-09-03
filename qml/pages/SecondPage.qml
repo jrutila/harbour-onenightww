@@ -66,8 +66,13 @@ Page {
         cellHeight: parent.height / 6
 
         header: PageHeader {
-            id: hdr
-            title: qsTr("Choose " + (gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length) + " roles")
+            title: qsTr("Pick roles")
+        }
+
+        Label {
+            property int players: gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length
+            anchors.top: parent.top
+            text: "Choose "+players
         }
 
         delegate: Rectangle {
@@ -75,21 +80,63 @@ Page {
             property bool selected: Engine.isSelected(index)
             width: listView.cellWidth
             height: listView.cellHeight
-            color: "red"
-            border.color: selected ? Theme.highlightColor : Theme.primaryColor
-            border.width: 8
+            color: "transparent" // Theme.primaryColor
+            //border.color: "red" // selected ? Theme.highlightColor : Theme.primaryColor
+            //border.width: 1
+
+            Image {
+                //anchors.fill: parent
+                id: img
+                source: "../../images/"+name+".png"
+                fillMode: Image.PreserveAspectCrop
+                anchors.horizontalCenter: parent.horizontalCenter
+                clip: true
+                width: listView.cellWidth
+                height: parent.height
+                //height: parent.height
+            }
+
+            ShaderEffect {
+                anchors.fill: parent
+                visible: !selected
+                property var src: img
+                vertexShader: "
+                    uniform highp mat4 qt_Matrix;
+                    attribute highp vec4 qt_Vertex;
+                    attribute highp vec2 qt_MultiTexCoord0;
+                    varying highp vec2 coord;
+                    void main() {
+                        coord = qt_MultiTexCoord0;
+                        gl_Position = qt_Matrix * qt_Vertex;
+                    }"
+                fragmentShader: "
+                    varying highp vec2 coord;
+                    uniform sampler2D src;
+                    uniform lowp float qt_Opacity;
+                    void main() {
+                        lowp vec4 tex = texture2D(src, coord);
+                        gl_FragColor = vec4(vec3(dot(tex.rgb, vec3(0.344, 0.5, 0.156))), tex.a) * qt_Opacity;
+                    }"
+            }
 
             Label {
                 x: Theme.paddingLarge
                 text: qsTr(name)
-                anchors.verticalCenter: parent.verticalCenter
+                //anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                font.bold: true
+                font.family: "Helvetica [Cronyx]"
+                font.pixelSize: Theme.fontSizeSmall
+                color: selected ? "white" : "grey"
             }
+
+
             MouseArea {
                 anchors.fill: parent;
                 onClicked: {
                     Engine.toggleRole(index);
                     delegate.selected = Engine.isSelected(index)
-                    hdr.title = qsTr("Choose " + (gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length) + " roles")
                 }
             }
         }

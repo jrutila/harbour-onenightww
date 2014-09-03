@@ -10,4 +10,5 @@ QtObject {
     property var middles
     property var switches
     property var votes
+    property var voted
 }

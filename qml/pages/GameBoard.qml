@@ -34,6 +34,18 @@ Page {
                 y = my - height/2
                 x = mx - width/2
             }
+
+            Label {
+                visible: state == 2
+                color: "red"
+                text: gameCanvas.votes[card.player.id]
+                font.pixelSize: Theme.fontSizeHuge
+                font.bold: true
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                z: 90
+            }
+
             onCardSelected: selectCard(selected)
         }
     }
@@ -177,6 +189,23 @@ Page {
 
     }
 
+    function resetFlips() {
+        console.log("RESET FLIPS")
+        for (var c = 0; c < rep.count; c++)
+        {
+            var card = rep.itemAt(c)
+            card.flipped = false
+            card.zoom(false)
+        }
+        var md = [middle1, middle2, middle3]
+        for (var m = 0; m < 3; m++)
+        {
+            var card = md[m]
+            card.zoom(false)
+            card.flipped = false
+        }
+    }
+
     function resetUI() {
         console.log("RESET UI")
         for (var c = 0; c < rep.count; c++)
@@ -207,8 +236,9 @@ Page {
         id: dialog
         player: Engine.getPlayer(currentPlayer+1)
 
-        onOpened: resetUI()
+        onOpened: resetFlips()
         onAccepted: {
+            resetUI()
             currentPlayer++
             doPlayerStuff()
         }
@@ -249,6 +279,7 @@ Page {
         }
         else if (state == 0)
         {
+            Engine.calcFinalRoles()
             state = 1
             var dialog = pageStack.push("DayDialog.qml");
             dialog.accepted.connect(function() {
@@ -261,13 +292,16 @@ Page {
             })
         } else if (state == 1)
         {
-            state = 2
+            currentPlayer = 0;
+            state = 2;
+            recalcCards();
+            resetUI();
             infoText.text = "Here are the votes"
             for (var i = 0; i < gameCanvas.numberOfPlayers; i++)
             {
                 var cPlayer = Engine.getPlayer(i)
                 cPlayer.card.flipped = true
-                var voted = gameCanvas.votes[cPlayer]
+                cPlayer.card.showNewRole = true
             }
         }
     }

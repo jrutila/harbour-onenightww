@@ -87,24 +87,49 @@ Rectangle {
             onClicked: cardSelected(cardItem)
         }
 
-        front: Rectangle {
+        front: Image {
+            source: "../images/cardback.png"
+            Label {
+                anchors.bottom: parent.bottom
+                text: player.role.name
+                color: "black"
+                font.pixelSize: 18
+            }
+        }
+
+        /*
+        Rectangle {
             anchors.fill: parent
             color: Theme.primaryColor
         }
+        */
 
         back: Rectangle {
             anchors.fill: parent
-            color: { //Theme.highlightColor
-                if (cardItem.ind == 0)
-                    return "red"
-                if (cardItem.ind == 1)
-                    return "blue"
-                if (cardItem.ind == 2)
-                    return "green"
-                if (cardItem.ind == 3)
-                    return "darkyellow"
-                return Theme.highlightColor
+            color: Theme.highlightColor
+            Image {
+                //anchors.fill: parent
+                anchors.left: parent.left
+                source: {
+                    if (showSwitchedRole && player.switchedRole)
+                        return "../images/"+player.switchedRole.name+".png"
+                    return "../images/"+player.role.name+".png"
+                }
+                width: player.role.newRole != undefined && showNewRole ? parent.width / 2 : parent.width
+                height: parent.height
+                //width: parent.width / 2
+                fillMode: Image.Tile
             }
+
+            Image {
+                visible: showNewRole && player.role.newRole != undefined
+                source: player.role.newRole ? "../images/"+player.role.newRole.name+".png" : ""
+                width: parent.width / 2
+                height: parent.height
+                anchors.right: parent.right
+                fillMode: Image.Tile
+            }
+
             Label {
                 id: mainLbl
                 text: {
@@ -117,11 +142,6 @@ Rectangle {
                 color: Theme.primaryColor
                 font.pixelSize: 18
             }
-            Label {
-                anchors.top: mainLbl.bottom
-                text: player.switchedRole ? "("+player.switchedRole.name+")" : "-"
-                font.pixelSize: 18
-            }
         }
 
         transform: [
@@ -130,7 +150,7 @@ Rectangle {
                 origin.x: flCard.width/2
                 origin.y: flCard.height/2
                 axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-                angle: 160    // the default angle
+                angle: 10    // the default angle
             },
             Rotation {
                 id: normRot

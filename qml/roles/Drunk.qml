@@ -56,7 +56,6 @@ Role {
 
     function third(card) {
         myPlayer.card.flipped = false
-        middle2.zoom(false)
         return [1]
     }
 }
