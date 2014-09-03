@@ -41,7 +41,7 @@ Role {
         switched = card
         myRole.switched = card.player
 
-        infoText.text = "You are now "+switched.player.role.name+switched.player.role.name
+        infoText.text = "You are now "+switched.player.role.name
                 + " " + switched.player.role.info
         helpText.text = "Click any card once more to close the cards"
     }

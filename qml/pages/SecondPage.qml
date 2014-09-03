@@ -32,6 +32,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import ".."
 import "../js/Engine.js" as Engine
+import QtGraphicalEffects 1.0
 
 Page {
     id: page
@@ -97,9 +98,10 @@ Page {
             }
 
             ShaderEffect {
-                anchors.fill: parent
+                width: listView.cellWidth;
+                height: parent.height
                 visible: !selected
-                property var src: img
+                property variant src: img
                 vertexShader: "
                     uniform highp mat4 qt_Matrix;
                     attribute highp vec4 qt_Vertex;

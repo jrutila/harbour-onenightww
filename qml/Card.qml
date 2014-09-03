@@ -88,11 +88,14 @@ Rectangle {
             onClicked: cardSelected(cardItem)
         }
 
-        front: Image {
-            source: "../images/cardback.png"
+        front: Item {
+            anchors.fill: parent
+            Image {
+                source: "../images/cardback.png"
+            }
             Label {
-                visible: Engine.getGame().debugMode
-                anchors.bottom: flCard.bottom
+                visible: gameBoard.gameCanvas.debugMode
+                anchors.bottom: parent.bottom
                 text: player.role.name
                 color: "red"
                 font.pixelSize: 18
@@ -143,6 +146,7 @@ Rectangle {
                 }
                 color: Theme.primaryColor
                 font.pixelSize: 18
+                anchors.bottom: parent.bottom
             }
         }
 

@@ -37,5 +37,6 @@ CoverBackground {
         id: label
         anchors.centerIn: parent
         text: "One Night Ultimate Werewolf"
+        wrapMode: Text.WordWrap
     }
 }
