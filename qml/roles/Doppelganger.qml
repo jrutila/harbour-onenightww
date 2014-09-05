@@ -7,6 +7,7 @@ import "../js/Engine.js" as Engine
 Role {
     property var logic
     property bool skipped: false
+    property var chosen
 
     function zero() {
         infoText.text = "You are the Doppelganger"
@@ -30,6 +31,7 @@ Role {
                 infoText.text = "And swithed to "+myPlayer.switchedRole.name
                 myPlayer.card.showSwitchedRole = true
             }
+            chosen.flipped = true
             return [1, 3]
         }
         if (card.player == myPlayer)
@@ -40,6 +42,7 @@ Role {
             helpText.text = "Skipped."
             return
         }
+        chosen = card
         card.flipped = true
         myRole = new card.player.role.constructor()
         helpText.text = "Your new role is "+myRole.name
@@ -61,7 +64,10 @@ Role {
               myRole instanceof Engine.Mason ||
               myRole instanceof Engine.Minion
                     ))
+            {
+                logic.second(card)
                 return [1,3]
+            }
         }
         myPlayer.card.showNewRole = true
 
@@ -80,7 +86,10 @@ Role {
               myRole instanceof Engine.Mason ||
               myRole instanceof Engine.Minion
                     ))
+            {
+                logic.third(card)
                 return [1,3]
+            }
         }
         return logic.third(card)
     }

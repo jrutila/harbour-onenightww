@@ -143,6 +143,7 @@ Page {
             }
         }
         MenuItem {
+            visible: gameCanvas.debugMode
             text: "Day"
             onClicked: {
                 stateChange()
@@ -168,6 +169,15 @@ Page {
             return
         switch(state)
         {
+        case -2:
+            var curPlayer = Engine.getPlayer(currentPlayer)
+            if (curPlayer.seeRole)
+                curPlayer.card.flipped = true
+            else
+                curPlayer.card.zoom(true)
+
+            wait(1, nextPlayer)
+            break;
         case -1:
         case 0:
             console.log("Card "+cc.player.id+" selected")
@@ -195,13 +205,15 @@ Page {
     }
 
     function wait(sec, done) {
-        if (!sec || true)
+        if (!sec || gameCanvas.debugMode)
         {
             done && done()
             return
         }
         waitTimer.done = done
-        waitTimer.seconds = sec[0]
+        if (sec instanceof Array)
+            sec = sec[0]
+        waitTimer.seconds = sec
     }
 
 
@@ -306,30 +318,42 @@ Page {
         if (state == -1)
         {
             state = 0
-            currentPlayer = 0
-            pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
-               .accepted.connect(function() {
-                   doPlayerStuff()
-                })
+            currentPlayer = -1
+            pageStack.push(dialog)
         }
-        else if (state == 0)
+        else if (state == 0 || state == -2)
         {
-            Engine.calcFinalRoles()
-            state = 1
-            var dialog = pageStack.push("DayDialog.qml");
-            dialog.accepted.connect(function() {
-                resetUI();
-                currentPlayer = 0
-                middle1.visible = false
-                middle2.visible = false
-                middle3.visible = false
-                recalcCards();
-                infoText.text = "Click the player to kill"
-            })
-            dialog.opened.connect(function() {
-                console.log("Day dialog opened")
-                resetFlips();
-            })
+            if (state == 0)
+                Engine.calcFinalRoles()
+
+            if (state == -2 || !Engine.isRoleIn(Engine.Insomniac))
+            {
+                state = 1
+                var dlg = pageStack.push("DayDialog.qml");
+                dlg.accepted.connect(function() {
+                    resetUI();
+                    currentPlayer = 0
+                    middle1.visible = false
+                    middle2.visible = false
+                    middle3.visible = false
+                    recalcCards();
+                    infoText.text = "Click the player to kill"
+                })
+                dlg.opened.connect(function() {
+                    console.log("Day dialog opened")
+                    resetFlips();
+                })
+            } else {
+                state = -2
+                currentPlayer = -1
+                /*
+                pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
+                   .accepted.connect(function() {
+                       doPlayerStuff()
+                    })
+                    */
+                pageStack.push(dialog)
+            }
         } else if (state == 1)
         {
             currentPlayer = 0;

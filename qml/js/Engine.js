@@ -9,6 +9,7 @@ function initGameState(st) {
     gameState = st;
     gameState.roles =[
     new Doppelganger(),
+    new Insomniac(),
     new Seer(),
     new Robber(),
     new Troublemaker(),
@@ -23,9 +24,6 @@ function initGameState(st) {
     new Mason(),
     new Hunter(),
     new Tanner(),
-
-
-    new Insomniac(),
         ]
     gameState.readyToStart = false;
     gameState.players = []
@@ -141,8 +139,12 @@ function Doppelganger() {
 
 function Insomniac() {
     this.name = "Insomniac"
-    this.logic = "Insomniac"
+    this.logic = "Villager"
     this.info = "You are awake"
+
+    this.doRole = function(pl) {
+        pl.seeRole = true
+    }
 }
 
 function Player(id) {
@@ -150,6 +152,7 @@ function Player(id) {
     this.title = "P "+(id+1);
     this.role = undefined;
     this.switchedRole = undefined
+    this.seeRole = false
 }
 
 function Middle(id) {
@@ -166,10 +169,11 @@ function startGame() {
     //pl.role = gameState.roles[selRols.splice(6,1)[0]]
     //gameState.players[0] = pl
     /** END **/
+    console.log("DEBG MODE "+gameState.debugMode)
     for (var p = 0; p < gameState.numberOfPlayers; p++)
     {
         var desiredIndex = Math.floor(Math.random() * selRols.length);
-        //var desiredIndex = 0
+        if (gameState.debugMode && !gameState.debugRandomize) desiredIndex = 0
         var roleInd = selRols.splice(desiredIndex, 1)[0];
         var pl = new Player(p)
         pl.role = gameState.roles[roleInd];
@@ -221,7 +225,7 @@ function readyToStart() {
 function calcFinalRoles()
 {
     console.log("Calculating final roles")
-    var roles = [Doppelganger, Robber, Troublemaker, Drunk]
+    var roles = [Doppelganger, Robber, Troublemaker, Drunk, Insomniac]
     var players = []
     for (var r in roles)
     {

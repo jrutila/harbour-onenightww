@@ -13,4 +13,5 @@ QtObject {
     property var voted
 
     property bool debugMode: true
+    property bool debugRandomize: true
 }

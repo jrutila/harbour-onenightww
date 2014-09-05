@@ -118,16 +118,19 @@ Rectangle {
                 source: {
                     if (showSwitchedRole && player.switchedRole)
                         return "../images/"+player.switchedRole.name+".png"
+                    if (showNewRole && player.role.newRole != undefined)
+                        return "../images/"+player.role.newRole.name+".png"
                     return "../images/"+player.role.name+".png"
                 }
-                width: player.role.newRole != undefined && showNewRole ? parent.width / 2 : parent.width
+                //width: player.role.newRole != undefined && showNewRole ? parent.width / 2 : parent.width
+                width: parent.width
                 height: parent.height
                 //width: parent.width / 2
                 fillMode: Image.Tile
             }
 
             Image {
-                visible: showNewRole && player.role.newRole != undefined
+                visible: false // showNewRole && player.role.newRole != undefined
                 source: player.role.newRole ? "../images/"+player.role.newRole.name+".png" : ""
                 width: parent.width / 2
                 height: parent.height

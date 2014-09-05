@@ -37,6 +37,7 @@ Page {
     id: page
     forwardNavigation: true
     property GameCanvas gameState//: Engine.getGame()
+    property bool debugMode: gameState.debugMode
 
     SilicaFlickable {
         anchors.fill: parent
@@ -44,38 +45,43 @@ Page {
         contentWidth: column.width
 
         Column {
-        id: column
+            id: column
 
-        width: page.width
-        spacing: Theme.paddingLarge
-        PageHeader {
-            title: qsTr("Start new game")
-        }
-        Label {
-            x: Theme.paddingLarge
-            text: qsTr("Number of players " + gameState.numberOfPlayers)
-            color: Theme.secondaryHighlightColor
-            font.pixelSize: Theme.fontSizeExtraLarge
-        }
-        Slider {
-            id: nbrSlider
-            minimumValue: 3
-            maximumValue: 10
-            value: gameState.numberOfPlayers
-            stepSize: 1.0
-            width: parent.width
-            onValueChanged: gameState.numberOfPlayers = value
-        }
-        }
-
-        PullDownMenu {
-            Row {
-            Switch {
-                checked: gameState.debugMode
+            width: page.width
+            spacing: Theme.paddingLarge
+            PageHeader {
+                title: qsTr("Start new game")
             }
             Label {
-                text: "Debug mode"
+                x: Theme.paddingLarge
+                text: qsTr("Number of players " + gameState.numberOfPlayers)
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeExtraLarge
             }
+            Slider {
+                id: nbrSlider
+                minimumValue: 3
+                maximumValue: 10
+                value: gameState.numberOfPlayers
+                stepSize: 1.0
+                width: parent.width
+                onValueChanged: gameState.numberOfPlayers = value
+            }
+            TextSwitch {
+                checked: debugMode
+                text: "Debug mode"
+                automaticCheck: false
+                onClicked: {
+                    gameState.debugMode = !gameState.debugMode
+                }
+            }
+            TextSwitch {
+                checked: gameState.debugRandomize
+                text: "Debug: Randomize roles"
+                automaticCheck: false
+                onClicked: {
+                    gameState.debugRandomize = !gameState.debugRandomize
+                }
             }
         }
     }
