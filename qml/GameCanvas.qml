@@ -12,6 +12,8 @@ QtObject {
     property var votes
     property var voted
 
+    property var playerNames
+
     property bool debugMode: true
     property bool debugRandomize: true
 }

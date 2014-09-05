@@ -36,6 +36,7 @@ import "../js/Engine.js" as Engine
 Page {
     id: page
     property GameCanvas gameCanvas: Engine.getGame()
+    property var names
 
     SilicaGridView {
         id: listView
@@ -51,6 +52,9 @@ Page {
                 text: qsTr("Start")
                 enabled: gameCanvas.readyToStart
                 onClicked: {
+                    gameCanvas.playerNames = {}
+                    for (var p = 0; p < names.count; p++)
+                        gameCanvas.playerNames[p] = names.itemAt(p).text
                     Engine.startGame();
                     pageStack.clear();
                     pageStack.push("GameBoard.qml", {

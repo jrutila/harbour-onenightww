@@ -83,6 +83,19 @@ Page {
                     gameState.debugRandomize = !gameState.debugRandomize
                 }
             }
+            Repeater {
+                id: names
+                model: nbrSlider.value
+                delegate: TextField {
+                    id: playerName
+                    width: parent.width
+                    text: {
+                        if (gameState.playerNames)
+                            return gameState.playerNames[index]
+                        return "P " + (index +1)
+                    }
+                }
+            }
         }
     }
 
@@ -93,7 +106,7 @@ Page {
     onStatusChanged: {
         console.log("status "+PageStatus.Active)
         if (status === PageStatus.Active && pageStack.depth === 1) {
-            pageStack.pushAttached("SecondPage.qml")
+            pageStack.pushAttached("SecondPage.qml", { names: names })
         }
     }
 }

@@ -176,6 +176,7 @@ function startGame() {
         if (gameState.debugMode && !gameState.debugRandomize) desiredIndex = 0
         var roleInd = selRols.splice(desiredIndex, 1)[0];
         var pl = new Player(p)
+        pl.title = gameState.playerNames[p]
         pl.role = gameState.roles[roleInd];
         gameState.players[p] = pl;
         gameState.votes[pl.id] = 0;
