@@ -4,7 +4,5 @@ X-Nemo-Application-Type=silica-qt5
 Icon=harbour-onenightww
 Exec=harbour-onenightww
 Name=harbour-onenightww
-# translation example:
-# your app name in German locale (de)
-Name[de]=harbour-onenightww
+
 

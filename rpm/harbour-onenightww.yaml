@@ -1,6 +1,6 @@
 Name: harbour-onenightww
 Summary: One Night Ultimate Werewolf for Sailfish
-Version: 0.1
+Version: 1.0
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
@@ -12,7 +12,17 @@ License: LICENSE
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  Short description of my SailfishOS Application
+    Fully implemented One Night Ultimate Werewolf game.
+    This is not a helper application. You can actually
+    play the game with this application.
+
+    Playing is easy: Choose players and roles.
+    Pass the device from player to player as instructed.
+    Finally cast your votes and see who dies.
+    The application does not yet calculate the winner.
+
+    NOTE: The application does not include the graphics
+    from the original game for obvious reasons.
 Configure: none
 # The qtc5 builder inserts macros to allow QtCreator to have fine
 # control over qmake/make execution

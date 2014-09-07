@@ -13,7 +13,7 @@ Name:       harbour-onenightww
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    One Night Ultimate Werewolf for Sailfish
-Version:    0.1
+Version:    1.0
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE
@@ -28,7 +28,17 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my SailfishOS Application
+Fully implemented One Night Ultimate Werewolf game.
+This is not a helper application. You can actually
+play the game with this application.
+
+Playing is easy: Choose players and roles.
+Pass the device from player to player as instructed.
+Finally cast your votes and see who dies.
+The application does not yet calculate the winner.
+
+NOTE: The application does not include the graphics
+from the original game for obvious reasons.
 
 
 %prep
