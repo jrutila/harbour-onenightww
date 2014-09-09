@@ -11,6 +11,8 @@ Role {
 
     function zero() {
         infoText.text = "You are the Doppelganger"
+        if (state == -2)
+            return
         if (state == 0)
         {
             infoText.text = "You were the Doppelganger."

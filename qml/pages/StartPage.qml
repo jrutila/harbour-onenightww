@@ -67,6 +67,42 @@ Page {
                 width: parent.width
                 onValueChanged: gameState.numberOfPlayers = value
             }
+            Repeater {
+                id: names
+                model: nbrSlider.value
+                delegate: TextField {
+                    id: playerName
+                    width: column.width
+                    EnterKey.iconSource:
+                        index == names.count-1 ?
+                        "image://theme/icon-m-enter-close" :
+                        "image://theme/icon-m-enter-next"
+                    EnterKey.onClicked: {
+                        if (index == names.count-1)
+                            focus = false
+                        else
+                        {
+                            names.itemAt(index+1).focus = true
+                            names.itemAt(index+1).selectAll()
+                        }
+                    }
+                    onClicked: selectAll()
+                    onTextChanged: {
+                        if (gameState.playerNames == undefined)
+                            gameState.playerNames = {}
+                        console.log("setText "+index+" "+text)
+                        gameState.playerNames[index] = text
+                    }
+
+                    Component.onCompleted: {
+                        if (gameState.playerNames && gameState.playerNames[index])
+                            text = gameState.playerNames[index]
+                        else
+                            text = "P " + (index + 1)
+                    }
+                }
+            }
+
             TextSwitch {
                 checked: debugMode
                 text: "Debug mode"
@@ -76,24 +112,12 @@ Page {
                 }
             }
             TextSwitch {
+                visible: gameState.debugMode
                 checked: gameState.debugRandomize
                 text: "Debug: Randomize roles"
                 automaticCheck: false
                 onClicked: {
                     gameState.debugRandomize = !gameState.debugRandomize
-                }
-            }
-            Repeater {
-                id: names
-                model: nbrSlider.value
-                delegate: TextField {
-                    id: playerName
-                    width: parent.width
-                    text: {
-                        if (gameState.playerNames)
-                            return gameState.playerNames[index]
-                        return "P " + (index +1)
-                    }
                 }
             }
         }

@@ -14,6 +14,6 @@ QtObject {
 
     property var playerNames
 
-    property bool debugMode: true
+    property bool debugMode: false
     property bool debugRandomize: true
 }

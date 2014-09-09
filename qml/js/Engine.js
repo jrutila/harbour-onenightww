@@ -8,22 +8,22 @@ function initGameState(st) {
     console.log("initing gamestate")
     gameState = st;
     gameState.roles =[
-    new Doppelganger(),
-    new Insomniac(),
+    new Werewolf(),
+    new Werewolf(),
     new Seer(),
     new Robber(),
     new Troublemaker(),
-    new Drunk(),
-    new Werewolf(),
-    new Minion(),
-    new Werewolf(),
     new Villager(),
     new Villager(),
     new Villager(),
-    new Mason(),
-    new Mason(),
     new Hunter(),
     new Tanner(),
+    new Drunk(),
+    new Minion(),
+    new Mason(),
+    new Mason(),
+    new Doppelganger(),
+    new Insomniac(),
         ]
     gameState.readyToStart = false;
     gameState.players = []

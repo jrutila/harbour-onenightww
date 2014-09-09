@@ -88,8 +88,9 @@ Rectangle {
             onClicked: cardSelected(cardItem)
         }
 
-        front: Item {
+        front: Rectangle {
             anchors.fill: parent
+            color: Theme.secondaryColor
             Image {
                 source: "../images/cardback.png"
             }

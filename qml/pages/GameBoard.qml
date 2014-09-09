@@ -157,10 +157,8 @@ Page {
         if (!inited && status === PageStatus.Active && pageStack.depth === 1) {
             console.log("Show first player dialog")
             inited = true
-            pageStack.push("PlayerDialog.qml", { player: Engine.getPlayer(0) })
-               .accepted.connect(function() {
-                   doPlayerStuff()
-                })
+            currentPlayer = -1
+            pageStack.push(dialog)
         }
     }
 
@@ -212,7 +210,11 @@ Page {
         }
         waitTimer.done = done
         if (sec instanceof Array)
+        {
             sec = sec[0]
+            if (sec.length === 2)
+                sec = sec[0] + Math.floor(Math.random() * (sec[1] - sec[0]))
+        }
         waitTimer.seconds = sec
     }
 
@@ -290,6 +292,11 @@ Page {
             currentPlayer++
             doPlayerStuff()
         }
+        onRejected: {
+            resetUI()
+            currentPlayer++
+            doPlayerStuff()
+        }
     }
 
     function nextPlayer() {
@@ -313,6 +320,18 @@ Page {
         middle3.setPlayer(Engine.getMiddle(2))
     }
 
+    function dayResetUI()
+    {
+        resetUI();
+        currentPlayer = 0
+        middle1.visible = false
+        middle2.visible = false
+        middle3.visible = false
+        recalcCards();
+        infoText.text = "Click the player to kill"
+
+    }
+
     function stateChange() {
         console.log("State change!")
         if (state == -1)
@@ -330,18 +349,15 @@ Page {
             {
                 state = 1
                 var dlg = pageStack.push("DayDialog.qml");
-                dlg.accepted.connect(function() {
-                    resetUI();
-                    currentPlayer = 0
-                    middle1.visible = false
-                    middle2.visible = false
-                    middle3.visible = false
-                    recalcCards();
-                    infoText.text = "Click the player to kill"
-                })
                 dlg.opened.connect(function() {
                     console.log("Day dialog opened")
                     resetFlips();
+                })
+                dlg.accepted.connect(function() {
+                    dayResetUI();
+                })
+                dlg.rejected.connect(function() {
+                    dayResetUI();
                 })
             } else {
                 state = -2

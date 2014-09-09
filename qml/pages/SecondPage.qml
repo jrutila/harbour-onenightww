@@ -37,12 +37,14 @@ Page {
     id: page
     property GameCanvas gameCanvas: Engine.getGame()
     property var names
+    property int players: gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length
 
     SilicaGridView {
         id: listView
         model: ListModel {
             id: roleList
             Component.onCompleted: {
+                gameCanvas.readyToStart = false;
                 Engine.addRoles(roleList);
             }
         }
@@ -70,13 +72,8 @@ Page {
         cellHeight: parent.height / 6
 
         header: PageHeader {
-            title: qsTr("Pick roles")
-        }
-
-        Label {
-            property int players: gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length
-            anchors.top: parent.top
-            text: "Choose "+players
+            id: hdr
+            title: qsTr("Pick "+players+" roles")
         }
 
         delegate: Rectangle {
@@ -84,7 +81,7 @@ Page {
             property bool selected: Engine.isSelected(index)
             width: listView.cellWidth
             height: listView.cellHeight
-            color: "transparent" // Theme.primaryColor
+            color: Theme.highlightColor
             //border.color: "red" // selected ? Theme.highlightColor : Theme.primaryColor
             //border.width: 1
 
@@ -133,7 +130,7 @@ Page {
                 font.bold: true
                 font.family: "Helvetica [Cronyx]"
                 font.pixelSize: Theme.fontSizeSmall
-                color: selected ? "white" : "grey"
+                color: selected ? Theme.primaryColor : Theme.highlightColor
             }
 
 
@@ -142,6 +139,7 @@ Page {
                 onClicked: {
                     Engine.toggleRole(index);
                     delegate.selected = Engine.isSelected(index)
+                    page.players = gameCanvas.numberOfPlayers + 3 - gameCanvas.selectedRoles.length
                 }
             }
         }
