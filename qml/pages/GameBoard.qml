@@ -223,8 +223,8 @@ Page {
         recalcCards()
         createLogic()
         clicks = 0
-        logic.zero()
-
+        if (state < 1)
+            logic.zero()
     }
 
     Timer {

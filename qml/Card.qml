@@ -92,7 +92,9 @@ Rectangle {
             anchors.fill: parent
             color: Theme.secondaryColor
             Image {
+                anchors.fill: parent
                 source: "../images/cardback.png"
+                fillMode: Image.Stretch
             }
             Label {
                 visible: gameBoard.gameCanvas.debugMode
@@ -127,7 +129,7 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 //width: parent.width / 2
-                fillMode: Image.Tile
+                fillMode: Image.Stretch
             }
 
             Image {

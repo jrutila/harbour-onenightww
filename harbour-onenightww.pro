@@ -50,7 +50,8 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     images/Drunk.png \
     images/Doppelganger.png \
     images/cardback.png \
-    images/Minion.png
+    images/Minion.png \
+    qml/pages/About.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
