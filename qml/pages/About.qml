@@ -3,13 +3,16 @@ import Sailfish.Silica 1.0
 
 Page {
     SilicaFlickable {
-        anchors.fill: parent
+        anchors {
+            margins: Theme.paddingLarge
+            left: parent.left
+            right: parent.right
+        }
         contentHeight: column.height
 
         Column {
             id: column
             width: parent.width
-            spacing: 20
 
             PageHeader { title: "About" }
             Label {
@@ -39,6 +42,12 @@ Page {
                 text: "Card back image: cardback.png
 For each role add a png image by the roles name (e.g. Robber.png, Troublemaker.png)
 Images should be size of 153x153"
+            }
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                color: Theme.secondaryHighlightColor
+                text: "Icon image by <a>https://www.flickr.com/photos/ghetzu/3535994578/</a>"
             }
         }
     }

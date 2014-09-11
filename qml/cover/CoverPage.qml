@@ -35,7 +35,10 @@ import "../js/Engine.js" as Engine
 CoverBackground {
     Label {
         id: label
-        anchors.centerIn: parent
+        width: parent.width
+        anchors.verticalCenter: parent.verticalCenter
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
         text: "One Night Ultimate Werewolf"
         wrapMode: Text.WordWrap
     }
