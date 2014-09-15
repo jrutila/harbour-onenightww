@@ -120,6 +120,7 @@ function Hunter() {
     this.name = "Hunter"
     this.logic = "Villager"
     this.info = "The player you point at will die. You are on <i>village team</i>"
+    this.voted = undefined;
 }
 
 function Doppelganger() {
@@ -257,6 +258,11 @@ function vote(voter, voted)
 {
     gameState.voted[voter.id] = voted.id
     gameState.votes[voted.id]++;
+    if (voter.role instanceof Hunter || voter.role.newRole instanceof Hunter)
+    {
+        var v = gameState.votes[voted.id]
+        gameState.votes[voted.id] = (v % 900) + 900
+    }
     console.log(voter.title + " voted for "+voted.title)
 }
 

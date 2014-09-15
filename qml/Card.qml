@@ -16,6 +16,8 @@ Rectangle {
     signal cardSelected(var selected)
     color: "transparent"
     z: 0
+    property var flipScaleX: 2.0
+    property var flipScaleY: 2.0
 
     Label {
         text: player != undefined ? player.title : "Sokko"
@@ -219,8 +221,8 @@ Rectangle {
             name: "back"
             PropertyChanges { target: flipRot; angle: 180 }
             PropertyChanges { target: normRot; angle: 0 }
-            PropertyChanges { target: flipScale; xScale: 2.0 }
-            PropertyChanges { target: flipScale; yScale: 2.0 }
+            PropertyChanges { target: flipScale; xScale: flipScaleX }
+            PropertyChanges { target: flipScale; yScale: flipScaleY }
             PropertyChanges { target: cardItem; z: 5 }
             when: flCard.flipped
         }

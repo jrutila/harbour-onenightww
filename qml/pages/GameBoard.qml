@@ -47,9 +47,10 @@ Page {
             Label {
                 visible: gameBoard.state == 2
                 color: "red"
-                text: gameCanvas.votes[card.player.id]
+                text: gameCanvas.votes[card.player.id] % 900
                 font.pixelSize: Theme.fontSizeHuge
                 font.bold: true
+                font.underline: gameCanvas.votes[card.player.id] > 900
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 z: 90
@@ -380,8 +381,10 @@ Page {
             for (var i = 0; i < gameCanvas.numberOfPlayers; i++)
             {
                 var cPlayer = Engine.getPlayer(i)
-                cPlayer.card.flipped = true
+                cPlayer.card.flipScaleX = 1.2
+                cPlayer.card.flipScaleY = 1.2
                 cPlayer.card.showNewRole = true
+                cPlayer.card.flipped = true
             }
         }
     }
