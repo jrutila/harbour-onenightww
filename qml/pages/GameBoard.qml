@@ -332,13 +332,19 @@ Page {
         middle3.setPlayer(Engine.getMiddle(2))
     }
 
-    function dayResetUI()
+    function hideMiddle()
     {
-        resetUI();
-        currentPlayer = 0
         middle1.visible = false
         middle2.visible = false
         middle3.visible = false
+    }
+
+    function dayResetUI()
+    {
+        hideMiddle();
+        resetUI();
+        hideMiddle();
+        currentPlayer = 0
         recalcCards();
         infoText.text = "Click the player to kill"
 
@@ -367,6 +373,7 @@ Page {
                 dlg.opened.connect(function() {
                     console.log("Day dialog opened")
                     resetFlips();
+                    hideMiddle();
                     resetUI();
                 })
                 dlg.accepted.connect(function() {
