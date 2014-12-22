@@ -19,7 +19,6 @@ SOURCES += src/harbour-onenightww.cpp
 OTHER_FILES += qml/harbour-onenightww.qml \
     qml/cover/CoverPage.qml \
     qml/pages/SecondPage.qml \
-    rpm/harbour-onenightww.changes.in \
     rpm/harbour-onenightww.spec \
     rpm/harbour-onenightww.yaml \
     translations/*.ts \
@@ -51,7 +50,8 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     images/Doppelganger.png \
     images/cardback.png \
     images/Minion.png \
-    qml/pages/About.qml
+    qml/pages/About.qml \
+    rpm/harbour-onenightww.changes
 
 # to disable building translations every time, comment out the
 # following CONFIG line
