@@ -13,6 +13,7 @@ Page {
     property var lComp
     property var logic
     property int clicks: 0
+    property bool gaming: false
 
 
     SilicaFlickable {
@@ -136,9 +137,11 @@ Page {
     }
 
     PullDownMenu {
+        visible: !gaming || gameCanvas.debugMode
+
         MenuItem {
             text: qsTr("Restart")
-            enabled: true
+            enabled: !gaming || gameCanvas.debugMode
             onClicked: {
                 pageStack.replace("StartPage.qml", { gameState: gameCanvas })
             }
@@ -156,10 +159,11 @@ Page {
 
     onStatusChanged: {
         if (!inited && status === PageStatus.Active && pageStack.depth === 1) {
-            console.log("Show first player dialog")
-            inited = true
-            currentPlayer = -1
-            pageStack.push(dialog)
+            console.log("Show first player dialog");
+            inited = true;
+            currentPlayer = -1;
+            pageStack.push(dialog);
+            gaming = true;
         }
     }
 
@@ -287,14 +291,13 @@ Page {
 
         onOpened: {
             resetFlips();
+            resetUI();
         }
         onAccepted: {
-            resetUI()
             currentPlayer++
             doPlayerStuff()
         }
         onRejected: {
-            resetUI()
             currentPlayer++
             doPlayerStuff()
         }
@@ -334,7 +337,7 @@ Page {
     }
 
     function stateChange() {
-        console.log("State change!")
+        console.log("State change "+state)
         if (state == -1)
         {
             state = 0
@@ -344,7 +347,10 @@ Page {
         else if (state == 0 || state == -2)
         {
             if (state == 0)
+            {
+                resetUI();
                 Engine.calcFinalRoles()
+            }
 
             if (state == -2 || !Engine.isRoleIn(Engine.Insomniac))
             {
@@ -353,6 +359,7 @@ Page {
                 dlg.opened.connect(function() {
                     console.log("Day dialog opened")
                     resetFlips();
+                    resetUI();
                 })
                 dlg.accepted.connect(function() {
                     dayResetUI();
@@ -360,6 +367,7 @@ Page {
                 dlg.rejected.connect(function() {
                     dayResetUI();
                 })
+
             } else {
                 state = -2
                 currentPlayer = -1
@@ -378,6 +386,7 @@ Page {
             recalcCards();
             resetUI();
             infoText.text = "Here are the votes"
+            gaming = false;
             for (var i = 0; i < gameCanvas.numberOfPlayers; i++)
             {
                 var cPlayer = Engine.getPlayer(i)
