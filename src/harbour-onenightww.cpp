@@ -32,6 +32,8 @@
 #include <QtQuick>
 #endif
 
+#include <QQuickView>
+#include <QGuiApplication>
 #include <sailfishapp.h>
 
 
@@ -45,6 +47,11 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+
+    //QGuiApplication *app = SailfishApp::application(argc, argv);
+    //QQuickView* view = SailfishApp::createView();
+
+    //view->setFlags(view->flags() | Qt::WindowOverridesSystemGestures);
 
     return SailfishApp::main(argc, argv);
 }
