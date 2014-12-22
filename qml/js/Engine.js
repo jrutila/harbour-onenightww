@@ -31,6 +31,21 @@ function initGameState(st) {
     gameState.votes = {}
     gameState.voted = {}
 }
+var playOrder = [
+            Doppelganger.name,
+            Werewolf.name,
+            Minion.name,
+            Mason.name,
+            Seer.name,
+            Robber.name,
+            Troublemaker.name,
+            Drunk.name,
+            Insomniac.name,
+            Hunter.name,
+            Tanner.name,
+            Villager.name
+        ]
+var orderedRoles = [];
 var villageTeam = "You are on <i>village team</i>. Kill at least one werewolf."
 
 function Villager() {
@@ -190,6 +205,13 @@ function startGame() {
         pl.role = gameState.roles[roleInd];
         gameState.middles.push(pl);
     }
+
+    orderedRoles = gameState.selectedRoles.sort(function (ra, rb) {
+        var rola = gameState.roles[ra];
+        var rolb = gameState.roles[rb];
+        return playOrder.indexOf(rola.name) -
+                playOrder.indexOf(rolb.name);
+       });
 }
 
 function getPlayer(id) {
@@ -283,6 +305,12 @@ function isRoleIn(role) {
             return true
     }
     return false
+}
+
+function getRoleOrdered(index) {
+    var order_pl = {};
+    order_pl.role = gameState.roles[orderedRoles[index]];
+    return order_pl;
 }
 
 function toggleRole(index) {

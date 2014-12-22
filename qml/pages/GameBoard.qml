@@ -31,6 +31,7 @@ Page {
             id: card
             property int ind: index
             player: Engine.getPlayer((index+currentPlayer) % gameCanvas.numberOfPlayers)
+            debugMode: gameCanvas.debugMode
 
             Component.onCompleted: {
                 var middleX = parent.width / 2
@@ -43,6 +44,13 @@ Page {
                 var my = middleY + (rep.circleHeight/2)*Math.cos(ang)
                 y = my - height/2
                 x = mx - width/2
+            }
+
+            Label {
+                text: player != undefined ? player.title : "Sokko"
+                color: Theme.primaryColor
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
             }
 
             Label {

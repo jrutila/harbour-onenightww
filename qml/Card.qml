@@ -18,14 +18,7 @@ Rectangle {
     z: 0
     property var flipScaleX: 2.0
     property var flipScaleY: 2.0
-
-    Label {
-        text: player != undefined ? player.title : "Sokko"
-        color: Theme.primaryColor
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: flCard.bottom
-        anchors.topMargin: gameBoard.state == 2 ? 40 : 20
-    }
+    property bool debugMode: false
 
     MouseArea {
         id: clickArea
@@ -99,7 +92,7 @@ Rectangle {
                 fillMode: Image.Stretch
             }
             Label {
-                visible: gameBoard.gameCanvas.debugMode
+                visible: debugMode
                 anchors.bottom: parent.bottom
                 text: player.role.name
                 color: "red"
