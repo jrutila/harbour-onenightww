@@ -3,19 +3,18 @@ import "../js/Engine.js" as Engine
 
 Role {
     function zero() {
-        helpText.text = "Click a card to start"
+        helpText.text = qsTr("Click a card to start")
         myPlayer.card.bringFront()
     }
 
     function first(card) {
         myPlayer.card.showSwitchedRole = false
         myPlayer.card.flipped = true
-        infoText.text = "You are the seer. "+myPlayer.role.info
-        helpText.text = "Click any player or any middle card to see it. \
-        Click yourself to skip."
+        infoText.text = qsTr("You are the seer. ")+myPlayer.role.info
+        helpText.text = qsTr("Click any player or any middle card to see it. Click yourself to skip.")
         if (state == -1)
         {
-            helpText.text = "You can peek at the card next round"
+            helpText.text = qsTr("You can peek at the card next round")
         }
     }
 
@@ -43,14 +42,14 @@ Role {
             }
         }
         else if (myPlayer.card == card) {
-            helpText.text = "Skipped. Click some cards"
+            helpText.text = qsTr("Skipped. Click some cards")
         }  else {
             card.showNewRole = false
             card.showSwitchedRole = true
             card.flipped = true
         }
 
-        infoText.text = "Click any card once more to close the cards"
+        infoText.text = qsTr("Click any card once more to close the cards")
     }
 
     function third(card) {

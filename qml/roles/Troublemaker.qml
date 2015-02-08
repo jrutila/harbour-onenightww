@@ -13,12 +13,12 @@ Role {
 
     function first(card) {
         myPlayer.card.flipped = true
-        infoText.text = "You are the troublemaker. "
+        infoText.text = qsTr("You are the troublemaker. ")
                 + myPlayer.role.info
-        helpText.text = "Click in the middle if you want to skip."
+        helpText.text = qsTr("Click in the middle if you want to skip.")
         if (state == -1)
         {
-            helpText.text = "You can do the switch on the next round."
+            helpText.text = qsTr("You can do the switch on the next round.")
             return [1, 3]
         }
         return [1]
@@ -32,7 +32,7 @@ Role {
         if (card.player instanceof Engine.Middle)
         {
             skipped = true
-            helpText.text = "Skipped. Click some cards."
+            helpText.text = qsTr("Skipped. Click some cards.")
             return
         }
         card1 = card

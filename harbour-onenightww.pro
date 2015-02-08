@@ -14,7 +14,12 @@ TARGET = harbour-onenightww
 
 CONFIG += sailfishapp
 
+DEPLOYMENT_PATH = /usr/share/$${TARGET}
+
 SOURCES += src/harbour-onenightww.cpp
+
+images.files = images
+images.path = $${DEPLOYMENT_PATH}
 
 OTHER_FILES += qml/harbour-onenightww.qml \
     qml/cover/CoverPage.qml \
@@ -53,8 +58,9 @@ OTHER_FILES += qml/harbour-onenightww.qml \
     qml/pages/About.qml \
     rpm/harbour-onenightww.changes
 
+INSTALLS += images
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/harbour-onenightww-de.ts
+TRANSLATIONS += translations/de.ts
 

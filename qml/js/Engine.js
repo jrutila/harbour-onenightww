@@ -46,16 +46,18 @@ var playOrder = [
             Villager.name
         ]
 var orderedRoles = [];
-var villageTeam = "You are on <i>village team</i>. Kill at least one werewolf."
+var villageTeam = qsTr("You are on <i>village team</i>. Kill at least one werewolf.")
 
 function Villager() {
     this.name = "Villager"
     this.info = villageTeam
+    this.desc = qsTr("Villager")
 }
 
 function Drunk() {
     this.name = "Drunk"
-    this.info = "You don't know who you are"
+    this.info = qsTr("You don't know who you are")
+    this.desc = qsTr("Drunk")
 
     this.doRole = function(pl) {
         var rm = Math.floor(Math.random() * 3)
@@ -77,16 +79,19 @@ function Drunk() {
 
 function Werewolf() {
     this.name = "Werewolf"
-    this.info = "You are on <i>werewolf team</i>. No werewolf must die."
+    this.info = qsTr("You are on <i>werewolf team</i>. No werewolf must die.")
+    this.desc = qsTr("Werewolf")
 }
 function Seer() {
     this.name = "Seer"
     this.info = villageTeam
+    this.desc = qsTr("Seer")
 }
 function Robber() {
     this.name = "Robber"
     this.switched = null
-    this.info = "You are..."
+    this.info = qsTr("You are ...")
+    this.desc = qsTr("Robber")
 
     this.doRole = function(pl) {
         if (!this.switched) return
@@ -102,6 +107,7 @@ function Troublemaker() {
     this.name = "Troublemaker"
     this.switched = []
     this.info = villageTeam
+    this.desc = qsTr("Troublemaker")
 
     this.doRole = function(pl) {
         if (!this.switched || this.switched.length != 2)
@@ -121,27 +127,33 @@ function Mason() {
     this.name = "Mason"
     this.logic = "Werewolf"
     this.info = villageTeam
+    this.desc = qsTr("Mason")
 }
 function Minion() {
     this.name = "Minion"
-    this.info = "You are on <i>werewolf team</i>. No werewolf must die, but you can."
+    this.info = qsTr("You are on <i>werewolf team</i>. No werewolf must die, but you can.")
+    this.desc = qsTr("Minion")
 }
 function Tanner() {
     this.name = "Tanner"
     this.logic = "Villager"
-    this.info = "Try to get yourself killed!"
+    this.info = qsTr("Try to get yourself killed!")
+    this.desc = qsTr("Tanner")
 }
 function Hunter() {
     this.name = "Hunter"
     this.logic = "Villager"
-    this.info = "The player you point at will die. You are on <i>village team</i>"
+    this.info = qsTr("The player you point at will die. You are on <i>village team</i>")
     this.voted = undefined;
+    this.desc = qsTr("Hunter")
 }
 
 function Doppelganger() {
     this.name = "Doppelganger"
     this.logic = "Doppelganger"
-    this.info = "You are ..."
+    this.info = qsTr("You are ...")
+    this.desc = qsTr("Doppelganger")
+
     this.newRole = undefined
 
     this.doRole = function(pl) {
@@ -156,7 +168,8 @@ function Doppelganger() {
 function Insomniac() {
     this.name = "Insomniac"
     this.logic = "Villager"
-    this.info = "You are awake"
+    this.info = qsTr("You are awake")
+    this.desc = qsTr("Insomniac")
 
     this.doRole = function(pl) {
         pl.seeRole = true

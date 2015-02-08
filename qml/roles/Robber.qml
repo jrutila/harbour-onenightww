@@ -12,11 +12,11 @@ Role {
 
     function first(card) {
         myPlayer.card.flipped = true
-        infoText.text = "You are the robber."
-        helpText.text = "Click a player to steal. Click in the middle to skip."
+        infoText.text = qsTr("You are the robber.")
+        helpText.text = qsTr("Click a player to steal. Click in the middle to skip.")
         if (state == -1)
         {
-            helpText.text = "You can steal on the next round. Click some cards."
+            helpText.text = qsTr("You can steal on the next round. Click some cards.")
             return [1, 3]
         }
         return [1]
@@ -41,9 +41,9 @@ Role {
         switched = card
         myRole.switched = card.player
 
-        infoText.text = "You are now "+switched.player.role.name
+        infoText.text = qsTr("You are now ")+switched.player.role.name
                 + " " + switched.player.role.info
-        helpText.text = "Click any card once more to close the cards"
+        helpText.text = qsTr("Click any card once more to close the cards")
     }
 
     function third(card) {

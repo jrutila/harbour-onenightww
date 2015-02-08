@@ -140,10 +140,10 @@ Rectangle {
                 id: mainLbl
                 text: {
                     if (showSwitchedRole && player.switchedRole)
-                        return player.switchedRole.name
+                        return player.switchedRole.desc
                     if (showNewRole && player.role.newRole)
-                        return player.role.newRole.name
-                    return player.role.name
+                        return player.role.newRole.desc
+                    return player.role.desc
                 }
                 color: Theme.primaryColor
                 font.pixelSize: 18

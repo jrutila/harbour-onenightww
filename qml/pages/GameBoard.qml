@@ -12,6 +12,7 @@ Page {
     property bool inited: false
     property var lComp
     property var logic
+    property var desc
     property int clicks: 0
     property bool gaming: false
 
@@ -136,7 +137,7 @@ Page {
         anchors.fill: parent
         color: "transparent"
         Label {
-            text: "Wait for "+waitTimer.seconds
+            text: qsTr("Wait for ")+waitTimer.seconds+qsTr(" seconds")
             font.pixelSize: Theme.fontSizeExtraLarge
             color: Theme.secondaryColor
             anchors.horizontalCenter: parent.horizontalCenter
@@ -156,7 +157,7 @@ Page {
         }
         MenuItem {
             visible: gameCanvas.debugMode
-            text: "Day"
+            text: qsTr("Day")
             onClicked: {
                 stateChange()
             }
@@ -346,7 +347,7 @@ Page {
         hideMiddle();
         currentPlayer = 0
         recalcCards();
-        infoText.text = "Click the player to kill"
+        infoText.text = qsTr("Click the player to kill")
 
     }
 
@@ -400,7 +401,7 @@ Page {
             state = 2;
             recalcCards();
             resetUI();
-            infoText.text = "Here are the votes"
+            infoText.text = qsTr("Here are the votes")
             gaming = false;
             for (var i = 0; i < gameCanvas.numberOfPlayers; i++)
             {

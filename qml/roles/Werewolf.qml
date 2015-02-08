@@ -3,18 +3,18 @@ import "../js/Engine.js" as Engine
 
 Role {
     function zero() {
-        helpText.text = "Click a card to start"
+        helpText.text = qsTr("Click a card to start")
         myPlayer.card.bringFront()
     }
 
     function first(card) {
         myPlayer.card.flipped = true
-        infoText.text = "You are a "+myRole.name+". "+
+        infoText.text = qsTr("You are a ")+myRole.desc+". "+
                 myRole.info
-        helpText.text = "Click any card to see others"
+        helpText.text = qsTr("Click any card to see others")
         if (state == -1)
         {
-            helpText.text = "You see others in next round. Click a card."
+            helpText.text = qsTr("You see others in next round. Click a card.")
         }
         if (state == 0)
         {
@@ -33,7 +33,7 @@ Role {
         {
             others[o].card.flipped = true
         }
-        helpText.text = "Click a card once more to close the cards"
+        helpText.text = qsTr("Click a card once more to close the cards")
     }
 
     function third(card) {

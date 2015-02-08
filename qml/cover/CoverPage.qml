@@ -39,7 +39,7 @@ CoverBackground {
         anchors.verticalCenter: parent.verticalCenter
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        text: "One Night Ultimate Werewolf"
+        text: qsTr("One Night Ultimate Werewolf")
         wrapMode: Text.WordWrap
     }
 }

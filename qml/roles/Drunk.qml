@@ -4,17 +4,17 @@ import "../js/Engine.js" as Engine
 
 Role {
     function zero() {
-        infoText.text = "Click a card to start"
+        infoText.text = qsTr("Click a card to start")
         myPlayer.card.bringFront()
     }
 
     function first(card) {
         myPlayer.card.flipped = true
         myPlayer.card.bringFront()
-        infoText.text = "You are the drunk."
-        helpText.text = "Click any card to switch one random middle card"
+        infoText.text = qsTr("You are the drunk.")
+        helpText.text = qsTr("Click any card to switch one random middle card")
         if (state == -1)
-            helpText.text = "The change happens on next turn. Click a card."
+            helpText.text = qsTr("The change happens on next turn. Click a card.")
         return [1,2]
     }
 
@@ -50,7 +50,7 @@ Role {
             }
         }
 
-        infoText.text = "Click any card once more to close the cards"
+        infoText.text = qsTr("Click any card once more to close the cards")
         return [2,3]
     }
 
