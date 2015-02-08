@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>Now </source>
-        <translation>, jetzt </translation>
+        <translation>jetzt </translation>
     </message>
 </context>
 <context>
