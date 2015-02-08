@@ -10,16 +10,16 @@ Role {
     property var chosen
 
     function zero() {
-        infoText.text = qsTr("You are the Doppelganger")
+        infoText.text = qsTr("You are the Doppelganger. ")
         if (state == -2)
             return
         if (state == 0)
         {
-            infoText.text = qsTr("You were the Doppelganger.")
+            infoText.text = qsTr("You were the Doppelganger. ")
             if (myPlayer.role.newRole instanceof Engine.Drunk)
-                infoText.text += qsTr("Now you are Drunk and don't know your new role.")
+                infoText.text += qsTr("Now you are Drunk and don't know your new role. ")
             else
-                infoText.text += "Now "+ (myPlayer.switchedRole != undefined ? myPlayer.switchedRole.name : myPlayer.role.newRole.name)
+                infoText.text += qsTr("Now ")+ (myPlayer.switchedRole != undefined ? myPlayer.switchedRole.name : myPlayer.role.newRole.name)
             myPlayer.card.showNewRole = true
         }
         myPlayer.card.flipped = true
@@ -30,7 +30,7 @@ Role {
         if (state == 0) {
             if (!myPlayer.role.newRole instanceof Engine.Drunk)
             {
-                infoText.text = qsTr("And switched to ")+myPlayer.switchedRole.name
+                infoText.text = qsTr("And switched to ")+myPlayer.switchedRole.desc
                 myPlayer.card.showSwitchedRole = true
             }
             chosen.flipped = true
@@ -47,7 +47,7 @@ Role {
         chosen = card
         card.flipped = true
         myRole = new card.player.role.constructor()
-        helpText.text = qsTr("Your new role is ")+myRole.name
+        helpText.text = qsTr("Your new role is ")+myRole.desc
         myPlayer.role.newRole = myRole
 
         logic = loadLogic(myRole)

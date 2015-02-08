@@ -11,15 +11,15 @@
 <context>
     <name>Doppelganger</name>
     <message>
-        <source>You are the Doppelganger</source>
-        <translation>Du bist die Doppelgängerin</translation>
+        <source>You are the Doppelganger. </source>
+        <translation>Du bist die Doppelgängerin. </translation>
     </message>
     <message>
-        <source>You were the Doppelganger.</source>
-        <translation>Du warst der Doppelgängerin</translation>
+        <source>You were the Doppelganger. </source>
+        <translation>Du warst der Doppelgängerin. </translation>
     </message>
     <message>
-        <source>Now you are Drunk and don&apos;t know your new role.</source>
+        <source>Now you are Drunk and don&apos;t know your new role. </source>
         <translation>Du bist betrunken und kennst deinen neuen Charakter nicht.</translation>
     </message>
     <message>
@@ -33,6 +33,10 @@
     <message>
         <source>Your new role is </source>
         <translation>dein neuer Charakter ist </translation>
+    </message>
+    <message>
+        <source>Now </source>
+        <translation>, jetzt </translation>
     </message>
 </context>
 <context>
@@ -312,7 +316,8 @@
         <source>Skipped. Click some cards.</source>
         <translation>Übersprungen. Tippe auf einige Karten.</translation>
     </message>
-warte<context>
+</context>
+<context>
     <name>Villager</name>
     <message>
         <source>Click a card to start</source>
