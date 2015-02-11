@@ -63,7 +63,7 @@ Page {
             }
             Label {
                 x: Theme.paddingLarge
-                text: qsTr("Number of players ") + gameState.numberOfPlayers
+                text: qsTr("Number of players")+ " " + gameState.numberOfPlayers
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }

@@ -137,7 +137,7 @@ Page {
         anchors.fill: parent
         color: "transparent"
         Label {
-            text: qsTr("Wait for ")+waitTimer.seconds+qsTr(" seconds")
+            text: qsTr("Wait for")+" "+waitTimer.seconds
             font.pixelSize: Theme.fontSizeExtraLarge
             color: Theme.secondaryColor
             anchors.horizontalCenter: parent.horizontalCenter

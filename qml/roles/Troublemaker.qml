@@ -13,7 +13,7 @@ Role {
 
     function first(card) {
         myPlayer.card.flipped = true
-        infoText.text = qsTr("You are the troublemaker. ")
+        infoText.text = qsTr("You are the troublemaker.") + " "
                 + myPlayer.role.info
         helpText.text = qsTr("Click in the middle if you want to skip.")
         if (state == -1)

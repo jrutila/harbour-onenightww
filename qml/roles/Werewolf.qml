@@ -9,7 +9,7 @@ Role {
 
     function first(card) {
         myPlayer.card.flipped = true
-        infoText.text = qsTr("You are a ")+myRole.desc+". "+
+        infoText.text = qsTr("You are a")+" "+myRole.desc+". "+
                 myRole.info
         helpText.text = qsTr("Click any card to see others")
         if (state == -1)

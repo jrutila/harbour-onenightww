@@ -73,7 +73,7 @@ Page {
 
         header: PageHeader {
             id: hdr
-            title: qsTr("Pick ")+players+qsTr(" roles")
+            title: qsTr("Pick")+" "+players+" "+qsTr("roles")
         }
 
         delegate: Rectangle {

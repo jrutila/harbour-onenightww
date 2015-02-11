@@ -11,32 +11,32 @@
 <context>
     <name>Doppelganger</name>
     <message>
-        <source>You are the Doppelganger. </source>
-        <translation>Du bist die Doppelgängerin. </translation>
+        <source>You are the Doppelganger.</source>
+        <translation>Du bist die Doppelgängerin.</translation>
     </message>
     <message>
-        <source>You were the Doppelganger. </source>
-        <translation>Du warst der Doppelgängerin. </translation>
+        <source>You were the Doppelganger.</source>
+        <translation>Du warst die Doppelgängerin.</translation>
     </message>
     <message>
-        <source>Now you are Drunk and don&apos;t know your new role. </source>
+        <source>Now you are Drunk and don&apos;t know your new role.</source>
         <translation>Du bist betrunken und kennst deinen neuen Charakter nicht.</translation>
     </message>
     <message>
-        <source>And switched to </source>
-        <translation>Und getauscht mit </translation>
+        <source>And switched to</source>
+        <translation>Und getauscht mit</translation>
     </message>
     <message>
         <source>Skipped.</source>
         <translation>Ausgelassen.</translation>
     </message>
     <message>
-        <source>Your new role is </source>
-        <translation>dein neuer Charakter ist </translation>
+        <source>Your new role is</source>
+        <translation>dein neuer Charakter ist</translation>
     </message>
     <message>
-        <source>Now </source>
-        <translation>jetzt </translation>
+        <source>Now</source>
+        <translation>jetzt</translation>
     </message>
 </context>
 <context>
@@ -79,10 +79,6 @@
     <message>
         <source>You don&apos;t know who you are</source>
         <translation>Du weißt nicht wer du bist</translation>
-    </message>
-    <message>
-        <source> is now </source>
-        <translation type="vanished"> ist jetzt ein </translation>
     </message>
     <message>
         <source>Werewolf</source>
@@ -145,8 +141,8 @@
         <translation>Schlaflose</translation>
     </message>
     <message>
-        <source>You are awake</source>
-        <translation>Du bist wach</translation>
+        <source>You are awake.</source>
+        <translation>Du bist wach.</translation>
     </message>
 </context>
 <context>
@@ -156,8 +152,8 @@
         <translation>Neustart</translation>
     </message>
     <message>
-        <source>Wait for </source>
-        <translation>Warte </translation>
+        <source>Wait for</source>
+        <translation>Warte</translation>
     </message>
     <message>
         <source>Day</source>
@@ -170,10 +166,6 @@
     <message>
         <source>Here are the votes</source>
         <translation>Hier sind die Ergebnisse</translation>
-    </message>
-    <message>
-        <source> seconds</source>
-        <translation> Sekunden</translation>
     </message>
 </context>
 <context>
@@ -202,16 +194,16 @@
 <context>
     <name>PlayerDialog</name>
     <message>
-        <source>Pass the device to </source>
-        <translation>Gib das Gerät weiter an </translation>
+        <source>Pass the device to</source>
+        <translation>Gib das Gerät weiter an</translation>
     </message>
     <message>
-        <source>If you are </source>
-        <translation>Falls du </translation>
+        <source>If you are</source>
+        <translation>Falls du</translation>
     </message>
     <message>
-        <source> flick left</source>
-        <translation> bist, wische nach links</translation>
+        <source>flick left</source>
+        <translation>bist, wische nach links</translation>
     </message>
 </context>
 <context>
@@ -229,8 +221,8 @@
         <translation>Du darst nächste Runde stehlen. Tippe auf eine Karte.</translation>
     </message>
     <message>
-        <source>You are now </source>
-        <translation>Du bist jetzt </translation>
+        <source>You are now</source>
+        <translation>Du bist jetzt</translation>
     </message>
     <message>
         <source>Click any card once more to close the cards</source>
@@ -244,12 +236,12 @@
         <translation>Start</translation>
     </message>
     <message>
-        <source>Pick </source>
-        <translation>Wähle </translation>
+        <source>Pick</source>
+        <translation>Wähle</translation>
     </message>
     <message>
-        <source> roles</source>
-        <translation> Charaktere</translation>
+        <source>roles</source>
+        <translation>Charaktere</translation>
     </message>
 </context>
 <context>
@@ -259,8 +251,8 @@
         <translation>Tippe auf eine Karte um anzufangen</translation>
     </message>
     <message>
-        <source>You are the seer. </source>
-        <translation>Du bist die Seherin. </translation>
+        <source>You are the seer.</source>
+        <translation>Du bist die Seherin.</translation>
     </message>
     <message>
         <source>You can peek at the card next round</source>
@@ -286,8 +278,8 @@
         <translation>Neues Spiel starten</translation>
     </message>
     <message>
-        <source>Number of players </source>
-        <translation>Anzahl der Mitspieler </translation>
+        <source>Number of players</source>
+        <translation>Anzahl der Mitspieler</translation>
     </message>
     <message>
         <source>Debug Mode</source>
@@ -301,8 +293,8 @@
 <context>
     <name>Troublemaker</name>
     <message>
-        <source>You are the troublemaker. </source>
-        <translation>Du bist die Unruhestifterin. </translation>
+        <source>You are the troublemaker.</source>
+        <translation>Du bist die Unruhestifterin.</translation>
     </message>
     <message>
         <source>Click in the middle if you want to skip.</source>
@@ -328,8 +320,8 @@
         <translation>Tippe nochmals auf eine Karte</translation>
     </message>
     <message>
-        <source>You are a </source>
-        <translation>Du bist ein </translation>
+        <source>You are a</source>
+        <translation>Du bist ein</translation>
     </message>
     <message>
         <source>Click a card to close</source>
@@ -343,8 +335,8 @@
         <translation>Tippe auf eine Karte um anzufangen</translation>
     </message>
     <message>
-        <source>You are a </source>
-        <translation>Du bist ein </translation>
+        <source>You are a</source>
+        <translation>Du bist ein</translation>
     </message>
     <message>
         <source>Click any card to see others</source>

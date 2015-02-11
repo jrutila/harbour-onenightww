@@ -10,7 +10,7 @@ Role {
     function first(card) {
         myPlayer.card.showSwitchedRole = false
         myPlayer.card.flipped = true
-        infoText.text = qsTr("You are the seer. ")+myPlayer.role.info
+        infoText.text = qsTr("You are the seer.")+" "+myPlayer.role.info
         helpText.text = qsTr("Click any player or any middle card to see it. Click yourself to skip.")
         if (state == -1)
         {

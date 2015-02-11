@@ -168,7 +168,7 @@ function Doppelganger() {
 function Insomniac() {
     this.name = "Insomniac"
     this.logic = "Villager"
-    this.info = qsTr("You are awake")
+    this.info = qsTr("You are awake.")
     this.desc = qsTr("Insomniac")
 
     this.doRole = function(pl) {

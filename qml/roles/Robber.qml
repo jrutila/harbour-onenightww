@@ -41,7 +41,7 @@ Role {
         switched = card
         myRole.switched = card.player
 
-        infoText.text = qsTr("You are now ")+switched.player.role.name
+        infoText.text = qsTr("You are now")+" "+switched.player.role.desc
                 + " " + switched.player.role.info
         helpText.text = qsTr("Click any card once more to close the cards")
     }

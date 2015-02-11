@@ -9,13 +9,13 @@ Dialog {
         anchors.verticalCenter: parent.verticalCenter
         anchors.top: parent.top
 
-        text: qsTr("Pass the device to ")+ playerDialog.player.title
+        text: qsTr("Pass the device to")+" "+playerDialog.player.title
     }
 
     Label {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
-        text: qsTr("If you are ")+ playerDialog.player.title + qsTr(" flick left")
+        text: qsTr("If you are")+" "+ playerDialog.player.title + " " +qsTr("flick left")
     }
 }

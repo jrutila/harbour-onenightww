@@ -13,7 +13,7 @@ Role {
     }
 
     function second(card) {
-        infoText.text = qsTr("You are a ")+myPlayer.role.desc+". "
+        infoText.text = qsTr("You are a")+" "+myPlayer.role.desc+". "
                 + myPlayer.role.info
         helpText.text = qsTr("Click a card to close")
         myPlayer.card.flipped = true
