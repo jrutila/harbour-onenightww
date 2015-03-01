@@ -190,14 +190,14 @@ Rectangle {
                 id: toX
                 target: cardMove
                 properties: "x"
-                duration: 600
+                duration: 300
                 easing.type: Easing.InOutQuad
             }
             PropertyAnimation {
                 id: toY
                 target: cardMove
                 properties: "y"
-                duration: 600
+                duration: 300
                 easing.type: Easing.InOutQuad
             }
         }
