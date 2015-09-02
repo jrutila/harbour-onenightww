@@ -52,9 +52,6 @@ int main(int argc, char *argv[])
     QGuiApplication *app = SailfishApp::application(argc, argv);
 
     QString locale = QLocale::system().name();
-    if (locale == "C") {
-        locale = "de"; //workaround while debugging
-    }
     QTranslator translator;
     translator.load(SailfishApp::pathTo("translations").toLocalFile() + "/" + locale + ".qm");
     app->installTranslator(&translator);
