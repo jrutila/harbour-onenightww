@@ -8,8 +8,10 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Wed Sep 2 2015 Juho Rutila <juho.rutila@iki.fi> 1.2
+- Merged arsh0r's german translation
+- Merged asrh0r's bug fixes regarding Troublemaker
+
 * Tue Dec 23 2014 Juho Rutila <juho.rutila@iki.fi> 1.1
 - Reseted the UI for better to suit new page navigation
 - Added selected roles to the day dialog in play order
-
-
