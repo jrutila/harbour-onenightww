@@ -14,7 +14,7 @@ Name:       harbour-onenightww
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    One Night Ultimate Werewolf for Sailfish
 Version:    1.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/

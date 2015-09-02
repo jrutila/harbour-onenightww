@@ -73,7 +73,7 @@ Page {
 
         header: PageHeader {
             id: hdr
-            title: qsTr("Pick "+players+" roles")
+            title: qsTr("Pick")+" "+players+" "+qsTr("roles")
         }
 
         delegate: Rectangle {
@@ -123,7 +123,7 @@ Page {
 
             Label {
                 x: Theme.paddingLarge
-                text: qsTr(name)
+                text: desc
                 //anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom

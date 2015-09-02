@@ -63,7 +63,7 @@ Page {
             }
             Label {
                 x: Theme.paddingLarge
-                text: qsTr("Number of players " + gameState.numberOfPlayers)
+                text: qsTr("Number of players")+ " " + gameState.numberOfPlayers
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
@@ -114,7 +114,7 @@ Page {
 
             TextSwitch {
                 checked: debugMode
-                text: "Debug mode"
+                text: qsTr("Debug Mode")
                 automaticCheck: false
                 onClicked: {
                     gameState.debugMode = !gameState.debugMode
@@ -123,7 +123,7 @@ Page {
             TextSwitch {
                 visible: gameState.debugMode
                 checked: gameState.debugRandomize
-                text: "Debug: Randomize roles"
+                text: qsTr("Debug: Randomize roles")
                 automaticCheck: false
                 onClicked: {
                     gameState.debugRandomize = !gameState.debugRandomize

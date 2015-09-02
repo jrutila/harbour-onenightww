@@ -33,6 +33,7 @@
 #endif
 
 #include <QQuickView>
+#include <QTranslator>
 #include <QGuiApplication>
 #include <sailfishapp.h>
 
@@ -48,11 +49,21 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    //QGuiApplication *app = SailfishApp::application(argc, argv);
-    //QQuickView* view = SailfishApp::createView();
+    QGuiApplication *app = SailfishApp::application(argc, argv);
 
+    QString locale = QLocale::system().name();
+    if (locale == "C") {
+        locale = "de"; //workaround while debugging
+    }
+    QTranslator translator;
+    translator.load(SailfishApp::pathTo("translations").toLocalFile() + "/" + locale + ".qm");
+    app->installTranslator(&translator);
+
+    QQuickView* view = SailfishApp::createView();
     //view->setFlags(view->flags() | Qt::WindowOverridesSystemGestures);
+    view->setSource(SailfishApp::pathTo("qml/harbour-onenightww.qml"));
+    view->show();
 
-    return SailfishApp::main(argc, argv);
+    return app->exec();
 }
 
